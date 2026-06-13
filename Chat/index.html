@@ -2,86 +2,365 @@
 <html lang="id">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
     <title>Zexzo | Chat</title>
     <link rel="stylesheet" href="/style.css">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            background: linear-gradient(135deg, #0a0f1e 0%, #0a2a3e 100%);
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            height: 100vh;
+            display: flex;
+            flex-direction: column;
+            overflow: hidden;
+        }
+
+        /* Header Chat */
+        .chat-header {
+            background: linear-gradient(90deg, #075E54, #128C7E);
+            padding: 15px 20px;
+            display: flex;
+            align-items: center;
+            gap: 15px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.2);
+        }
+
+        .back-btn {
+            color: white;
+            text-decoration: none;
+            font-size: 1.5rem;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            background: rgba(255,255,255,0.1);
+        }
+
+        .back-btn:hover {
+            background: rgba(255,255,255,0.2);
+        }
+
+        .chat-header .info {
+            flex: 1;
+        }
+
+        .chat-header h2 {
+            color: white;
+            font-size: 1.2rem;
+        }
+
+        .chat-header p {
+            color: #dcf8c6;
+            font-size: 0.75rem;
+        }
+
+        .chat-header .status {
+            display: flex;
+            align-items: center;
+            gap: 5px;
+        }
+
+        .online-dot {
+            width: 10px;
+            height: 10px;
+            background: #25D366;
+            border-radius: 50%;
+            animation: pulse 1.5s infinite;
+        }
+
+        @keyframes pulse {
+            0%, 100% { opacity: 1; }
+            50% { opacity: 0.5; }
+        }
+
+        /* Container Chat */
+        .chat-container {
+            flex: 1;
+            overflow-y: auto;
+            padding: 20px;
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+            background-image: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100" opacity="0.05"><path fill="none" d="M10,50 L90,50 M50,10 L50,90" stroke="white" stroke-width="1"/><circle cx="50" cy="50" r="40" stroke="white" stroke-width="1" fill="none"/></svg>');
+            background-size: 60px;
+        }
+
+        /* Bubble Chat */
+        .message {
+            display: flex;
+            max-width: 80%;
+            animation: fadeIn 0.3s ease;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .message.outgoing {
+            align-self: flex-end;
+        }
+
+        .message.incoming {
+            align-self: flex-start;
+        }
+
+        .bubble {
+            padding: 10px 14px;
+            border-radius: 18px;
+            position: relative;
+            word-wrap: break-word;
+            max-width: 100%;
+        }
+
+        .outgoing .bubble {
+            background: #dcf8c6;
+            color: #1a2a3a;
+            border-bottom-right-radius: 4px;
+        }
+
+        .incoming .bubble {
+            background: white;
+            color: #1a2a3a;
+            border-bottom-left-radius: 4px;
+        }
+
+        .message-time {
+            font-size: 0.65rem;
+            color: #888;
+            margin-top: 5px;
+            text-align: right;
+        }
+
+        .incoming .message-time {
+            text-align: left;
+        }
+
+        /* Input Area */
+        .chat-input-area {
+            background: #1e2a3a;
+            padding: 12px 20px;
+            display: flex;
+            gap: 12px;
+            border-top: 1px solid rgba(255,255,255,0.1);
+        }
+
+        .chat-input-area input {
+            flex: 1;
+            padding: 12px 16px;
+            border: none;
+            border-radius: 25px;
+            background: #2a3a4a;
+            color: white;
+            font-size: 1rem;
+            outline: none;
+        }
+
+        .chat-input-area input::placeholder {
+            color: #8899aa;
+        }
+
+        .chat-input-area button {
+            width: 48px;
+            height: 48px;
+            border: none;
+            border-radius: 50%;
+            background: linear-gradient(135deg, #25D366, #128C7E);
+            color: white;
+            font-size: 1.3rem;
+            cursor: pointer;
+            transition: transform 0.2s;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .chat-input-area button:hover {
+            transform: scale(1.05);
+        }
+
+        /* Typing indicator */
+        .typing-indicator {
+            display: flex;
+            align-items: center;
+            gap: 5px;
+            padding: 8px 12px;
+            background: white;
+            border-radius: 18px;
+            width: fit-content;
+        }
+
+        .typing-indicator span {
+            width: 8px;
+            height: 8px;
+            background: #888;
+            border-radius: 50%;
+            animation: typing 1.4s infinite;
+        }
+
+        .typing-indicator span:nth-child(2) { animation-delay: 0.2s; }
+        .typing-indicator span:nth-child(3) { animation-delay: 0.4s; }
+
+        @keyframes typing {
+            0%, 60%, 100% { transform: translateY(0); opacity: 0.4; }
+            30% { transform: translateY(-8px); opacity: 1; }
+        }
+
+        /* Scrollbar */
+        .chat-container::-webkit-scrollbar {
+            width: 5px;
+        }
+        .chat-container::-webkit-scrollbar-track {
+            background: #1e2a3a;
+        }
+        .chat-container::-webkit-scrollbar-thumb {
+            background: #128C7E;
+            border-radius: 10px;
+        }
+    </style>
 </head>
 <body>
-    <div class="container">
-        <a href="/" class="back-btn">← Kembali ke Home</a>
-        
-        <div class="header">
-            <h1>💬 CHAT ZEXZO</h1>
-            <p class="tagline">Pilih platform chat</p>
+    <!-- Header -->
+    <div class="chat-header">
+        <a href="/" class="back-btn">←</a>
+        <div class="info">
+            <h2>Zexzo Support</h2>
+            <div class="status">
+                <span class="online-dot"></span>
+                <p>Online</p>
+            </div>
         </div>
+        <div style="font-size: 1.2rem;">🤖</div>
+    </div>
 
-        <div class="chat-options">
-            <a href="https://wa.me/6281234567890" class="chat-card" id="waCard" target="_blank">
-                <span>📱</span>
-                <div>
-                    <h3>WhatsApp</h3>
-                    <p>Chat via WhatsApp</p>
-                </div>
-            </a>
-            
-            <a href="https://t.me/zexzo_example" class="chat-card" id="teleCard" target="_blank">
-                <span>📞</span>
-                <div>
-                    <h3>Telegram</h3>
-                    <p>Chat via Telegram</p>
-                </div>
-            </a>
-        </div>
-
-        <div class="footer-note">
-            <p>✨ Edit link di folder Chat/index.html ✨</p>
+    <!-- Container Pesan -->
+    <div class="chat-container" id="chatContainer">
+        <div class="message incoming">
+            <div class="bubble">
+                Halo! Selamat datang di chat Zexzo 👋<br>
+                Ada yang bisa saya bantu?
+                <div class="message-time">Sekarang</div>
+            </div>
         </div>
     </div>
 
-    <style>
-        .back-btn {
-            display: inline-block;
-            margin-bottom: 20px;
-            color: #00ffcc;
-            text-decoration: none;
-            padding: 8px 16px;
-            border-radius: 20px;
-            background: rgba(0,255,200,0.1);
+    <!-- Input Area -->
+    <div class="chat-input-area">
+        <input type="text" id="messageInput" placeholder="Ketik pesan..." autocomplete="off">
+        <button id="sendBtn">📤</button>
+    </div>
+
+    <script>
+        const chatContainer = document.getElementById('chatContainer');
+        const messageInput = document.getElementById('messageInput');
+        const sendBtn = document.getElementById('sendBtn');
+
+        // Fungsi tambah pesan
+        function addMessage(text, isOutgoing = true) {
+            const messageDiv = document.createElement('div');
+            messageDiv.className = `message ${isOutgoing ? 'outgoing' : 'incoming'}`;
+            
+            const now = new Date();
+            const timeString = now.toLocaleTimeString('id-ID', { hour: '2-digit', minute: '2-digit' });
+            
+            messageDiv.innerHTML = `
+                <div class="bubble">
+                    ${text}
+                    <div class="message-time">${timeString}</div>
+                </div>
+            `;
+            
+            chatContainer.appendChild(messageDiv);
+            chatContainer.scrollTop = chatContainer.scrollHeight;
         }
-        .chat-options {
-            display: flex;
-            flex-direction: column;
-            gap: 20px;
-            margin-top: 20px;
+
+        // Fungsi kirim pesan
+        function sendMessage() {
+            const text = messageInput.value.trim();
+            if (text === '') return;
+            
+            // Tampilkan pesan user
+            addMessage(text, true);
+            messageInput.value = '';
+            
+            // Simulasi typing admin
+            showTyping();
+            
+            // Balasan otomatis admin (bisa diubah/ganti dengan API nanti)
+            setTimeout(() => {
+                hideTyping();
+                let reply = getAutoReply(text);
+                addMessage(reply, false);
+            }, 1500);
         }
-        .chat-card {
-            display: flex;
-            align-items: center;
-            gap: 20px;
-            padding: 20px;
-            background: linear-gradient(145deg, #0a2525, #041515);
-            border-radius: 20px;
-            text-decoration: none;
-            border: 1px solid rgba(0,255,200,0.3);
-            transition: all 0.3s;
+
+        // Typing indicator
+        let typingElement = null;
+        
+        function showTyping() {
+            typingElement = document.createElement('div');
+            typingElement.className = 'message incoming';
+            typingElement.innerHTML = `
+                <div class="typing-indicator">
+                    <span></span><span></span><span></span>
+                </div>
+            `;
+            chatContainer.appendChild(typingElement);
+            chatContainer.scrollTop = chatContainer.scrollHeight;
         }
-        .chat-card:hover {
-            transform: translateX(10px);
-            border-color: #00ffcc;
+        
+        function hideTyping() {
+            if (typingElement) {
+                typingElement.remove();
+                typingElement = null;
+            }
         }
-        .chat-card span {
-            font-size: 2.5rem;
+
+        // Auto reply (kamu bisa edit sesuka hati!)
+        function getAutoReply(message) {
+            const msg = message.toLowerCase();
+            
+            if (msg.includes('jasgen') || msg.includes('jasa gendong')) {
+                return 'Jasgen: Jasa Gendong 🚀\nHarga 1 bintang = Rp 1.000\nMinat? Silakan order langsung ya!';
+            }
+            if (msg.includes('harga') || msg.includes('price')) {
+                return '💸 Harga Jasgen:\n⭐ 1 bintang = Rp 1.000\n🎉 Diskon khusus 10 bintang = Rp 8.000';
+            }
+            if (msg.includes('order') || msg.includes('pesan')) {
+                return '📝 Untuk order Jasgen, silakan kirim detail:\n- Nama\n- Lokasi jemput\n- Lokasi tujuan\n- Banyak bintang';
+            }
+            if (msg.includes('halo') || msg.includes('hai') || msg.includes('hi') || msg.includes('helo')) {
+                return 'Halo juga! 👋 Ada yang bisa saya bantu?';
+            }
+            if (msg.includes('makasih') || msg.includes('terima kasih') || msg.includes('thanks')) {
+                return 'Sama-sama! 😊 Senang bisa membantu. Kalau ada pertanyaan lagi, tanyakan saja ya!';
+            }
+            if (msg.includes('admin') || msg.includes('cs')) {
+                return 'Saya admin Zexzo. Ada yang bisa dibantu? Silakan tanyakan saja 😊';
+            }
+            if (msg.includes('wa') || msg.includes('whatsapp')) {
+                return '📱 WhatsApp admin: wa.me/6281234567890\nKlik link tersebut untuk chat via WhatsApp!';
+            }
+            
+            return 'Terima kasih pesannya! 🙏 Tim Zexzo akan segera merespon. Ketik "order" untuk info pemesanan Jasgen.';
         }
-        .chat-card h3 {
-            color: #00ffcc;
-            margin-bottom: 5px;
-        }
-        .chat-card p {
-            color: #88aacc;
-            font-size: 0.8rem;
-        }
-        #waCard:hover { background: #075E54; }
-        #teleCard:hover { background: #0088cc; }
-    </style>
+
+        // Event listener
+        sendBtn.addEventListener('click', sendMessage);
+        messageInput.addEventListener('keypress', (e) => {
+            if (e.key === 'Enter') sendMessage();
+        });
+
+        // Auto focus input
+        messageInput.focus();
+    </script>
 </body>
 </html>
