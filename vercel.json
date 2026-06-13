@@ -1,0 +1,7 @@
+{
+  "rewrites": [
+    { "source": "/Chat", "destination": "/Chat/index.html" },
+    { "source": "/Sosial-Media", "destination": "/Sosial-Media/index.html" },
+    { "source": "/(.*)", "destination": "/index.html" }
+  ]
+}
