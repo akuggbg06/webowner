@@ -1,0 +1,252 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Zexzo Web</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            min-height: 100vh;
+            background: linear-gradient(135deg, #0a0f2e 0%, #0a2e2e 50%, #0a0a0a 100%);
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding: 20px;
+        }
+
+        .container {
+            max-width: 550px;
+            width: 100%;
+            background: rgba(0, 0, 0, 0.75);
+            backdrop-filter: blur(10px);
+            border-radius: 35px;
+            padding: 45px 35px;
+            box-shadow: 0 25px 50px rgba(0, 0, 0, 0.5);
+            border: 1px solid rgba(0, 255, 200, 0.4);
+        }
+
+        h1 {
+            text-align: center;
+            font-size: 2.7rem;
+            margin-bottom: 10px;
+            background: linear-gradient(135deg, #00ccff, #00ff88, #00ccff);
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: transparent;
+            letter-spacing: 2px;
+        }
+
+        .subtitle {
+            text-align: center;
+            color: #99ccff;
+            margin-bottom: 35px;
+            font-size: 0.85rem;
+            border-bottom: 1px dashed #2a6a6a;
+            padding-bottom: 10px;
+        }
+
+        /* Kotak Jasgen */
+        .card {
+            background: linear-gradient(145deg, #0a2a2a, #041a1a);
+            border-radius: 24px;
+            padding: 20px;
+            margin-bottom: 25px;
+            text-align: center;
+            border-left: 4px solid #00ffaa;
+            border-right: 4px solid #00ccff;
+            transition: transform 0.2s;
+        }
+
+        .card:hover {
+            transform: scale(1.02);
+        }
+
+        .card h2 {
+            color: #00ffcc;
+            font-size: 2rem;
+            margin-bottom: 12px;
+        }
+
+        .card p {
+            color: #bbffdd;
+            font-size: 0.95rem;
+            line-height: 1.5;
+        }
+
+        .price-tag {
+            display: inline-block;
+            background: #ff6600;
+            color: white;
+            padding: 5px 15px;
+            border-radius: 30px;
+            font-size: 0.8rem;
+            margin-top: 12px;
+            font-weight: bold;
+        }
+
+        /* Tombol */
+        .btn-group {
+            display: flex;
+            flex-direction: column;
+            gap: 15px;
+            margin-top: 10px;
+        }
+
+        .btn {
+            padding: 14px 20px;
+            border: none;
+            border-radius: 50px;
+            font-size: 1.1rem;
+            font-weight: bold;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            text-align: center;
+            background: linear-gradient(90deg, #1a5a5a, #0a3a3a);
+            color: white;
+            border: 1px solid #00ffaa;
+        }
+
+        .btn-jasgen {
+            background: linear-gradient(90deg, #0066cc, #004499);
+            box-shadow: 0 0 12px rgba(0, 102, 204, 0.5);
+        }
+
+        .btn-chat {
+            background: linear-gradient(90deg, #00aa66, #008844);
+        }
+
+        .btn-sosmed {
+            background: linear-gradient(90deg, #aa44ff, #7722cc);
+        }
+
+        .btn:hover {
+            transform: translateY(-3px);
+            filter: brightness(1.1);
+            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.3);
+        }
+
+        /* Sosial Media Section (untuk diisi sendiri) */
+        .sosmed-section {
+            margin-top: 35px;
+            padding-top: 20px;
+            border-top: 1px solid #2a6a6a;
+            text-align: center;
+        }
+
+        .sosmed-section h3 {
+            color: #88ddff;
+            margin-bottom: 15px;
+            font-size: 1.3rem;
+        }
+
+        .sosmed-links {
+            display: flex;
+            justify-content: center;
+            gap: 25px;
+            flex-wrap: wrap;
+        }
+
+        .sosmed-links a {
+            color: #ccddff;
+            text-decoration: none;
+            padding: 8px 18px;
+            background: #0a2a2e;
+            border-radius: 40px;
+            transition: 0.2s;
+            border: 1px solid #00ccaa;
+        }
+
+        .sosmed-links a:hover {
+            background: #00aaff;
+            color: black;
+            transform: scale(1.05);
+        }
+
+        .edit-note {
+            text-align: center;
+            margin-top: 25px;
+            font-size: 0.7rem;
+            color: #668888;
+        }
+
+        @media (max-width: 480px) {
+            .container {
+                padding: 30px 20px;
+            }
+            .card h2 {
+                font-size: 1.5rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>✨ Zexzo ✨</h1>
+        <div class="subtitle">Your Digital Partner</div>
+
+        <!-- Kotak Jasgen -->
+        <div class="card">
+            <h2>📦 Jasgen</h2>
+            <p><strong>Jasgen: Jasa Gendong</strong><br>
+            1 bintang = 1k / 1000<br>
+            Cepat, aman, terpercaya! 🚀</p>
+            <span class="price-tag">⭐ 1 bintang = Rp 1.000</span>
+        </div>
+
+        <!-- Tombol-tombol -->
+        <div class="btn-group">
+            <button class="btn btn-jasgen" id="btnJasgen">💼 Jasgen</button>
+            <button class="btn btn-chat" id="btnChat">💬 Chat Zexzo</button>
+            <button class="btn btn-sosmed" id="btnSosmed">📱 Sosial Media Zexzo</button>
+        </div>
+
+        <!-- Sosial Media (EDIT DI SINI) -->
+        <div class="sosmed-section">
+            <h3>📢 Ikuti Sosial Media</h3>
+            <div class="sosmed-links" id="sosmedList">
+                <!-- EDIT LINK DI BAWAH INI -->
+                <a href="#" id="teleLink">📞 Telegram</a>
+                <a href="#" id="tiktokLink">🎵 TikTok</a>
+                <!-- TAMBAH SOSMED LAIN DI SINI (copy baris di bawah) -->
+                <!-- <a href="#">📷 Instagram</a> -->
+            </div>
+        </div>
+        <div class="edit-note">
+            ⚠️ Edit link sosial media di file index.html (bagian id teleLink & tiktokLink)
+        </div>
+    </div>
+
+    <script>
+        // Tombol Jasgen -> vercel.app/Chat
+        document.getElementById('btnJasgen').addEventListener('click', function() {
+            window.location.href = '/Chat';
+        });
+
+        // Tombol Chat Zexzo -> vercel.app/Chat
+        document.getElementById('btnChat').addEventListener('click', function() {
+            window.location.href = '/Chat';
+        });
+
+        // Tombol Sosial Media Zexzo -> vercel.app/Sosial-Media
+        document.getElementById('btnSosmed').addEventListener('click', function() {
+            window.location.href = '/Sosial-Media';
+        });
+
+        // ========== EDIT SOSIAL MEDIA DI SINI (ganti # dengan link asli) ==========
+        // Contoh:
+        // document.getElementById('teleLink').href = 'https://t.me/usernamekamu';
+        // document.getElementById('tiktokLink').href = 'https://tiktok.com/@usernamekamu';
+        
+        // SEMENTARA (pakai # dulu, ganti nanti):
+        document.getElementById('teleLink').href = 'https://t.me/zexzo_example';   // Ganti link Telegram asli kamu
+        document.getElementById('tiktokLink').href = 'https://tiktok.com/@zexzo_example'; // Ganti link TikTok asli kamu
+    </script>
+</body>
+</html>
