@@ -102,6 +102,13 @@
             margin-top: 5px;
             text-align: right;
         }
+        .chat-image {
+            max-width: 200px;
+            max-height: 200px;
+            border-radius: 10px;
+            cursor: pointer;
+            margin-top: 5px;
+        }
         .chat-input-area {
             background: #1e2a3a;
             padding: 12px 20px;
@@ -123,10 +130,16 @@
             height: 48px;
             border: none;
             border-radius: 50%;
+            cursor: pointer;
+            font-size: 1.3rem;
+        }
+        #attachBtn {
+            background: #128C7E;
+            color: white;
+        }
+        #sendBtn {
             background: #25D366;
             color: white;
-            font-size: 1.3rem;
-            cursor: pointer;
         }
         .owner-offline {
             text-align: center;
@@ -135,27 +148,44 @@
             color: #ffaaaa;
             font-size: 0.8rem;
         }
-        .typing-indicator {
+        .preview-container {
+            display: none;
+            padding: 10px;
+            background: #1e2a3a;
+            margin: 5px 20px;
+            border-radius: 20px;
+        }
+        .preview-inner {
             display: flex;
             align-items: center;
-            gap: 5px;
-            padding: 8px 12px;
-            background: white;
-            border-radius: 18px;
-            width: fit-content;
+            gap: 10px;
         }
-        .typing-indicator span {
-            width: 8px;
-            height: 8px;
-            background: #888;
+        .preview-img {
+            max-width: 100px;
+            max-height: 100px;
+            border-radius: 10px;
+        }
+        .preview-name {
+            color: white;
+            flex: 1;
+            font-size: 0.8rem;
+        }
+        .cancel-preview {
+            background: red;
+            border: none;
             border-radius: 50%;
-            animation: typing 1.4s infinite;
+            width: 30px;
+            height: 30px;
+            color: white;
+            cursor: pointer;
         }
-        .typing-indicator span:nth-child(2) { animation-delay: 0.2s; }
-        .typing-indicator span:nth-child(3) { animation-delay: 0.4s; }
-        @keyframes typing {
-            0%, 60%, 100% { transform: translateY(0); opacity: 0.4; }
-            30% { transform: translateY(-8px); opacity: 1; }
+        .send-photo-btn {
+            background: #25D366;
+            border: none;
+            border-radius: 20px;
+            padding: 8px 15px;
+            color: white;
+            cursor: pointer;
         }
     </style>
 </head>
@@ -171,10 +201,16 @@
 
     <div class="chat-container" id="chatContainer"></div>
 
+    <div class="preview-container" id="previewContainer">
+        <div class="preview-inner" id="previewInner"></div>
+    </div>
+
     <div class="chat-input-area">
+        <button id="attachBtn">📎</button>
         <input type="text" id="messageInput" placeholder="Ketik pesan..." autocomplete="off">
         <button id="sendBtn">📤</button>
     </div>
+    <input type="file" id="fileInput" accept="image/*" style="display:none">
     <div id="offlineWarning" class="owner-offline" style="display:none;">⚠️ Owner sedang offline, coba lagi nanti ⚠️</div>
 
     <script>
@@ -200,13 +236,16 @@
                 warning.style.display = ownerStatus === 'off' ? 'block' : 'none';
                 const input = document.getElementById('messageInput');
                 const sendBtn = document.getElementById('sendBtn');
+                const attachBtn = document.getElementById('attachBtn');
                 if (ownerStatus === 'off') {
                     input.disabled = true;
                     sendBtn.disabled = true;
+                    attachBtn.disabled = true;
                     input.placeholder = 'Owner sedang offline...';
                 } else {
                     input.disabled = false;
                     sendBtn.disabled = false;
+                    attachBtn.disabled = false;
                     input.placeholder = 'Ketik pesan...';
                 }
             } catch (err) {
@@ -224,7 +263,7 @@
                     const container = document.getElementById('chatContainer');
                     container.innerHTML = '';
                     data.messages.forEach(msg => {
-                        appendMessage(msg.message, msg.sender === 'user' ? 'outgoing' : 'incoming', msg.created_at);
+                        appendMessage(msg, msg.sender === 'user' ? 'outgoing' : 'incoming');
                     });
                     if (data.messages.length > 0) {
                         lastMessageId = data.messages[data.messages.length - 1].id;
@@ -236,14 +275,25 @@
             }
         }
 
-        function appendMessage(text, type, timeStr) {
+        function appendMessage(msg, type) {
             const container = document.getElementById('chatContainer');
             const div = document.createElement('div');
             div.className = `message ${type}`;
-            const time = timeStr ? new Date(timeStr).toLocaleTimeString('id-ID', { hour: '2-digit', minute: '2-digit' }) : new Date().toLocaleTimeString('id-ID', { hour: '2-digit', minute: '2-digit' });
+            
+            const time = msg.created_at ? new Date(msg.created_at).toLocaleTimeString('id-ID', { hour: '2-digit', minute: '2-digit' }) : new Date().toLocaleTimeString('id-ID', { hour: '2-digit', minute: '2-digit' });
+            
+            let content = '';
+            if (msg.has_image && msg.image_file_id) {
+                const photoUrl = `https://api.telegram.org/bot${localStorage.getItem('botToken') || ''}/getFile?file_id=${msg.image_file_id}`;
+                content = `<img src="https://api.telegram.org/file/bot${localStorage.getItem('botToken') || ''}/${msg.image_file_id}" class="chat-image" onclick="window.open(this.src)">`;
+            }
+            if (msg.message && msg.message.trim()) {
+                content += `<div>${escapeHtml(msg.message)}</div>`;
+            }
+            
             div.innerHTML = `
                 <div class="bubble">
-                    ${escapeHtml(text)}
+                    ${content}
                     <div class="message-time">${time}</div>
                 </div>
             `;
@@ -284,7 +334,6 @@
                 });
                 const data = await res.json();
                 if (data.success) {
-                    appendMessage(text, 'outgoing');
                     startPolling();
                 } else {
                     alert(data.message || 'Gagal kirim pesan');
@@ -302,8 +351,8 @@
                 const data = await res.json();
                 if (data.success && data.messages && data.messages.length > 0) {
                     data.messages.forEach(msg => {
-                        if (msg.id > lastMessageId && msg.sender === 'owner') {
-                            appendMessage(msg.message, 'incoming', msg.created_at);
+                        if (msg.id > lastMessageId) {
+                            appendMessage(msg, msg.sender === 'user' ? 'outgoing' : 'incoming');
                         }
                     });
                     if (data.messages.length > 0) {
@@ -320,11 +369,76 @@
             pollingInterval = setInterval(pollNewMessages, 3000);
         }
 
+        // ========== FITUR FOTO ==========
+        const attachBtn = document.getElementById('attachBtn');
+        const fileInput = document.getElementById('fileInput');
+        const previewContainer = document.getElementById('previewContainer');
+        const previewInner = document.getElementById('previewInner');
+
+        attachBtn.addEventListener('click', () => {
+            fileInput.click();
+        });
+
+        fileInput.addEventListener('change', async (e) => {
+            const file = e.target.files[0];
+            if (!file) return;
+            
+            if (file.size > 15 * 1024 * 1024) {
+                alert('Ukuran foto maksimal 15MB!');
+                return;
+            }
+            
+            if (!file.type.startsWith('image/')) {
+                alert('Hanya file gambar yang diperbolehkan!');
+                return;
+            }
+            
+            const reader = new FileReader();
+            reader.onload = function(event) {
+                previewContainer.style.display = 'block';
+                previewInner.innerHTML = `
+                    <img src="${event.target.result}" class="preview-img">
+                    <span class="preview-name">${file.name}</span>
+                    <button class="cancel-preview" id="cancelPreviewBtn">✕</button>
+                    <button class="send-photo-btn" id="sendPhotoBtn">Kirim</button>
+                `;
+                
+                document.getElementById('cancelPreviewBtn')?.addEventListener('click', () => {
+                    previewContainer.style.display = 'none';
+                    fileInput.value = '';
+                });
+                
+                document.getElementById('sendPhotoBtn')?.addEventListener('click', async () => {
+                    previewContainer.style.display = 'none';
+                    
+                    const formData = new FormData();
+                    formData.append('photo', file);
+                    formData.append('userId', userId);
+                    
+                    const res = await fetch('/api/send-photo', {
+                        method: 'POST',
+                        headers: { 'Authorization': `Bearer ${token}` },
+                        body: formData
+                    });
+                    
+                    const data = await res.json();
+                    if (data.success) {
+                        startPolling();
+                    } else {
+                        alert(data.message || 'Gagal kirim foto');
+                    }
+                    fileInput.value = '';
+                });
+            };
+            reader.readAsDataURL(file);
+        });
+
         document.getElementById('sendBtn').addEventListener('click', sendMessage);
         document.getElementById('messageInput').addEventListener('keypress', (e) => {
             if (e.key === 'Enter') sendMessage();
         });
 
+        // Simpan bot token untuk akses foto (dari env, tapi kita simpan sementara)
         async function init() {
             await checkOwnerStatus();
             await loadHistory();
