@@ -2,8 +2,11 @@
 <html lang="id">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Zexzo | Jasa Gendong</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+    <title>Zexzo | Jasa Gendong & Layanan Digital</title>
+    <!-- Google Fonts & Font Awesome Icons -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:opsz,wght@14..32,300;14..32,400;14..32,500;14..32,600;14..32,700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
     <style>
         * {
             margin: 0;
@@ -12,167 +15,399 @@
         }
 
         body {
-            min-height: 100vh;
-            background: linear-gradient(135deg, #0a0f1e 0%, #0a2a3e 50%, #0a1a1a 100%);
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            padding: 20px;
+            font-family: 'Inter', sans-serif;
+            background: linear-gradient(135deg, #0a0f1e 0%, #0a1f2a 100%);
+            color: #f0f3fa;
+            line-height: 1.5;
+            scroll-behavior: smooth;
         }
 
         .container {
-            max-width: 500px;
-            width: 100%;
-            background: rgba(10, 20, 30, 0.6);
-            backdrop-filter: blur(15px);
-            border-radius: 50px;
-            padding: 40px 30px;
-            box-shadow: 0 25px 45px rgba(0,0,0,0.3), 0 0 20px rgba(0,255,200,0.2);
-            border: 1px solid rgba(0,255,200,0.3);
-            text-align: center;
+            max-width: 1280px;
+            margin: 0 auto;
+            padding: 0 24px;
+        }
+
+        /* ========== HEADER ========== */
+        .navbar {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 20px 0;
+            flex-wrap: wrap;
+            gap: 20px;
+            border-bottom: 1px solid rgba(255,255,255,0.08);
         }
 
         .logo {
-            width: 120px;
-            height: 120px;
-            margin: 0 auto 25px;
-            background: linear-gradient(135deg, #00ffcc, #0066ff);
-            border-radius: 50%;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-size: 4rem;
-            box-shadow: 0 0 30px rgba(0,255,200,0.4);
-            animation: float 3s ease-in-out infinite;
-        }
-
-        @keyframes float {
-            0%, 100% { transform: translateY(0); }
-            50% { transform: translateY(-10px); }
-        }
-
-        h1 {
-            font-size: 2.5rem;
-            background: linear-gradient(135deg, #00ffcc, #00ccff, #00ff88);
+            font-size: 1.8rem;
+            font-weight: 800;
+            background: linear-gradient(135deg, #00ffcc, #00aaff);
             -webkit-background-clip: text;
             background-clip: text;
             color: transparent;
-            margin-bottom: 10px;
+            letter-spacing: -0.5px;
         }
 
-        .tagline {
-            color: #88ffdd;
-            font-size: 0.9rem;
-            margin-bottom: 15px;
-        }
-
-        .price {
-            background: rgba(255,100,0,0.2);
-            display: inline-block;
-            padding: 5px 15px;
-            border-radius: 50px;
-            font-size: 0.8rem;
-            color: #ffaa66;
-            margin-bottom: 30px;
-        }
-
-        .jasgen-box {
-            background: linear-gradient(135deg, rgba(0,50,50,0.5), rgba(0,20,20,0.5));
-            border-radius: 30px;
-            padding: 20px;
-            margin-bottom: 30px;
-            border: 1px solid rgba(0,255,200,0.3);
-        }
-
-        .jasgen-box h2 {
-            color: #00ffcc;
-            font-size: 1.5rem;
-            margin-bottom: 10px;
-        }
-
-        .jasgen-box p {
-            color: #bbffee;
-            font-size: 0.9rem;
-            line-height: 1.6;
-        }
-
-        .star {
-            color: #ffcc00;
-            font-size: 1.2rem;
-            margin-top: 10px;
-        }
-
-        .btn-group {
+        .nav-links {
             display: flex;
-            flex-direction: column;
-            gap: 15px;
-            margin-bottom: 30px;
+            gap: 32px;
+            align-items: center;
+            flex-wrap: wrap;
         }
 
-        .btn {
-            padding: 14px 20px;
+        .nav-links a {
+            color: #e2e8f0;
+            text-decoration: none;
+            font-weight: 500;
+            transition: 0.2s;
+        }
+
+        .nav-links a:hover {
+            color: #00ffcc;
+        }
+
+        .btn-outline {
+            border: 1px solid rgba(0,255,204,0.5);
+            padding: 8px 20px;
+            border-radius: 40px;
+            background: transparent;
+            color: #00ffcc;
+        }
+
+        .btn-outline:hover {
+            background: rgba(0,255,204,0.1);
+            border-color: #00ffcc;
+        }
+
+        .btn-solid {
+            background: linear-gradient(90deg, #00ffcc, #0099ff);
+            padding: 8px 24px;
+            border-radius: 40px;
+            color: #0a0f1e;
+            font-weight: 700;
             border: none;
-            border-radius: 60px;
-            font-size: 1rem;
-            font-weight: bold;
-            cursor: pointer;
-            transition: all 0.3s ease;
+        }
+
+        /* ========== HERO ========== */
+        .hero {
             display: flex;
             align-items: center;
+            justify-content: space-between;
+            gap: 48px;
+            padding: 60px 0 80px;
+            flex-wrap: wrap;
+        }
+
+        .hero-content {
+            flex: 1;
+            min-width: 280px;
+        }
+
+        .hero-badge {
+            background: rgba(0,255,204,0.15);
+            color: #00ffcc;
+            padding: 6px 14px;
+            border-radius: 40px;
+            font-size: 0.8rem;
+            display: inline-block;
+            margin-bottom: 20px;
+            font-weight: 600;
+        }
+
+        .hero-content h1 {
+            font-size: 3.2rem;
+            font-weight: 800;
+            line-height: 1.2;
+            margin-bottom: 20px;
+            background: linear-gradient(to right, #ffffff, #a5f3fc);
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: transparent;
+        }
+
+        .hero-desc {
+            font-size: 1.1rem;
+            color: #cbd5e6;
+            margin-bottom: 32px;
+            max-width: 500px;
+        }
+
+        .hero-stats {
+            display: flex;
+            gap: 32px;
+            margin-top: 32px;
+        }
+
+        .stat-item h3 {
+            font-size: 1.8rem;
+            color: #00ffcc;
+        }
+
+        .hero-image {
+            flex: 1;
+            background: rgba(0,255,204,0.05);
+            border-radius: 32px;
+            padding: 30px;
+            text-align: center;
+            border: 1px solid rgba(0,255,204,0.2);
+            backdrop-filter: blur(8px);
+        }
+
+        .hero-image i {
+            font-size: 8rem;
+            color: #00ffcc;
+            opacity: 0.8;
+        }
+
+        /* ========== CARD LAYANAN ========== */
+        .section-title {
+            text-align: center;
+            font-size: 2.2rem;
+            font-weight: 700;
+            margin-bottom: 48px;
+        }
+
+        .section-title span {
+            background: linear-gradient(135deg, #00ffcc, #00aaff);
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: transparent;
+        }
+
+        .card-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 30px;
+            margin: 40px 0 60px;
+        }
+
+        .service-card {
+            background: rgba(255,255,255,0.04);
+            backdrop-filter: blur(10px);
+            border-radius: 28px;
+            padding: 32px 24px;
+            text-align: center;
+            border: 1px solid rgba(255,255,255,0.08);
+            transition: all 0.25s ease;
+        }
+
+        .service-card:hover {
+            transform: translateY(-8px);
+            border-color: rgba(0,255,204,0.4);
+            box-shadow: 0 20px 35px -15px rgba(0,0,0,0.4);
+        }
+
+        .service-icon {
+            font-size: 3rem;
+            margin-bottom: 20px;
+        }
+
+        .service-card h3 {
+            font-size: 1.5rem;
+            margin-bottom: 12px;
+        }
+
+        .service-card p {
+            color: #a0b3d9;
+            font-size: 0.9rem;
+            margin-bottom: 20px;
+        }
+
+        .price-tag {
+            background: #00ffcc20;
+            display: inline-block;
+            padding: 6px 16px;
+            border-radius: 50px;
+            color: #00ffcc;
+            font-weight: 600;
+            font-size: 0.85rem;
+        }
+
+        /* ========== CTA ========== */
+        .cta-section {
+            background: linear-gradient(120deg, #00222b, #00121a);
+            border-radius: 48px;
+            padding: 60px 40px;
+            text-align: center;
+            margin: 40px 0;
+            border: 1px solid rgba(0,255,204,0.2);
+        }
+
+        .cta-section h2 {
+            font-size: 2rem;
+            margin-bottom: 16px;
+        }
+
+        .cta-buttons {
+            display: flex;
+            gap: 20px;
             justify-content: center;
-            gap: 12px;
+            margin-top: 32px;
+            flex-wrap: wrap;
+        }
+
+        .btn-large {
+            padding: 14px 36px;
+            font-size: 1rem;
+            border-radius: 60px;
+            font-weight: 600;
             text-decoration: none;
+            display: inline-block;
         }
 
-        .btn-chat {
-            background: linear-gradient(90deg, #25D366, #128C7E);
+        .btn-primary {
+            background: linear-gradient(95deg, #00ffcc, #0088ff);
+            color: #0a0f1e;
+        }
+
+        .btn-secondary {
+            background: rgba(255,255,255,0.05);
+            border: 1px solid rgba(0,255,204,0.5);
             color: white;
         }
 
-        .btn-sosmed {
-            background: linear-gradient(90deg, #aa44ff, #6611cc);
-            color: white;
-        }
-
-        .btn:hover {
-            transform: translateY(-3px);
-            filter: brightness(1.05);
-        }
-
+        /* ========== FOOTER ========== */
         .footer {
-            font-size: 0.7rem;
-            color: #558888;
+            margin-top: 80px;
+            padding: 40px 0 30px;
+            border-top: 1px solid rgba(255,255,255,0.05);
+            text-align: center;
+            color: #8e9cb0;
+            font-size: 0.85rem;
+        }
+
+        .social-links {
+            display: flex;
+            justify-content: center;
+            gap: 24px;
+            margin-bottom: 24px;
+        }
+
+        .social-links a {
+            color: #a0b3d9;
+            font-size: 1.4rem;
+            transition: 0.2s;
+        }
+
+        .social-links a:hover {
+            color: #00ffcc;
+        }
+
+        @media (max-width: 768px) {
+            .navbar {
+                flex-direction: column;
+                text-align: center;
+            }
+            .hero {
+                flex-direction: column;
+                text-align: center;
+            }
+            .hero-desc {
+                margin-left: auto;
+                margin-right: auto;
+            }
+            .hero-stats {
+                justify-content: center;
+            }
+            .hero-image {
+                order: -1;
+            }
+            .btn-large {
+                padding: 12px 24px;
+            }
         }
     </style>
 </head>
 <body>
-    <div class="container">
-        <div class="logo">🚀</div>
-        <h1>ZEXZO</h1>
-        <div class="tagline">Your Digital Partner</div>
-        <div class="price">⭐ 1 Bintang = 1.000 ⭐</div>
 
-        <div class="jasgen-box">
-            <h2>📦 Jasgen</h2>
-            <p><strong>Jasa Gendong</strong><br>
-            Cepat, Aman, Terpercaya<br>
-            Bisa order kapan aja!</p>
-            <div class="star">★★★★★</div>
-        </div>
-
-        <div class="btn-group">
-            <a href="/Chat" class="btn btn-chat">
-                💬 Chat Admin
-            </a>
-            <a href="/Sosial-Media" class="btn btn-sosmed">
-                📱 Sosial Media
-            </a>
-        </div>
-
-        <div class="footer">
-            ⚡ Login dulu ya biar bisa chat
+<div class="container">
+    <!-- NAVIGATION -->
+    <div class="navbar">
+        <div class="logo">ZEXZO</div>
+        <div class="nav-links">
+            <a href="#">Beranda</a>
+            <a href="/Chat">Dashboard</a>
+            <a href="/Bukti">Kirim Bukti</a>
+            <a href="/Login" class="btn-outline">Login</a>
+            <a href="/Register" class="btn-solid">Daftar</a>
         </div>
     </div>
+
+    <!-- HERO SECTION -->
+    <div class="hero">
+        <div class="hero-content">
+            <div class="hero-badge">🚀 Jasa Gendong Digital</div>
+            <h1>Gendongin tugasmu <br> 1 bintang cuma 1k</h1>
+            <p class="hero-desc">Jasgen solusi praktis buat lo yang butuh bantuan gendong barang, temenin event, atau apapun itu. Cepat, aman, dan terpercaya.</p>
+            <div class="cta-buttons" style="justify-content: flex-start;">
+                <a href="/Register" class="btn-large btn-primary">Mulai Sekarang</a>
+                <a href="/Chat" class="btn-large btn-secondary">💬 Live Chat</a>
+            </div>
+            <div class="hero-stats">
+                <div class="stat-item"><h3>50+</h3><p>User aktif</p></div>
+                <div class="stat-item"><h3>24/7</h3><p>Support</p></div>
+                <div class="stat-item"><h3>⭐1k</h3><p>Per bintang</p></div>
+            </div>
+        </div>
+        <div class="hero-image">
+            <i class="fas fa-rocket"></i>
+            <p style="margin-top: 20px; color:#a0b3d9;">✨ siap gendong kapan aja ✨</p>
+        </div>
+    </div>
+
+    <!-- LAYANAN UNGGULAN (CARD) -->
+    <div class="section-title">
+        <span>Layanan</span> Unggulan
+    </div>
+    <div class="card-grid">
+        <div class="service-card">
+            <div class="service-icon">📦</div>
+            <h3>Jasgen</h3>
+            <p>Jasa Gendong serba bisa. Dari bawain belanjaan sampai nemenin acara.</p>
+            <span class="price-tag">⭐ 1 Bintang = 1.000</span>
+        </div>
+        <div class="service-card">
+            <div class="service-icon">💬</div>
+            <h3>Real-time Chat</h3>
+            <p>Chat langsung dengan admin via dashboard. Balasan cepat & ramah.</p>
+            <span class="price-tag">gratis 24 jam</span>
+        </div>
+        <div class="service-card">
+            <div class="service-icon">🤖</div>
+            <h3>Bot Telegram</h3>
+            <p>Owner bisa bales otomatis & kelola user langsung dari Telegram.</p>
+            <span class="price-tag">/on /off /b</span>
+        </div>
+        <div class="service-card">
+            <div class="service-icon">🔒</div>
+            <h3>History Permanen</h3>
+            <p>Semua chat tersimpan di database. Aman & bisa diakses kapan saja.</p>
+            <span class="price-tag">private per user</span>
+        </div>
+    </div>
+
+    <!-- CTA TEMPLATEMONSTER STYLE -->
+    <div class="cta-section">
+        <h2>Mulai pakai <span style="color:#00ffcc;">Zexzo</span> sekarang</h2>
+        <p style="max-width: 600px; margin: 0 auto; color:#cbd5e6;">Daftar cuma 1 menit. Langsung dapet akses chat & kirim bukti pembayaran ke owner.</p>
+        <div class="cta-buttons">
+            <a href="/Register" class="btn-large btn-primary">📝 Daftar Sekarang</a>
+            <a href="/Login" class="btn-large btn-secondary">🔐 Login</a>
+        </div>
+    </div>
+
+    <!-- FOOTER -->
+    <div class="footer">
+        <div class="social-links">
+            <a href="https://t.me/zexzo_example" target="_blank"><i class="fab fa-telegram"></i></a>
+            <a href="https://tiktok.com/@zexzo_example" target="_blank"><i class="fab fa-tiktok"></i></a>
+            <a href="#"><i class="fab fa-instagram"></i></a>
+        </div>
+        <p>© 2025 Zexzo — Jasa Gendong 1 bintang 1k | Digital support 24/7</p>
+        <p style="margin-top: 12px;">🚀 Dibangun dengan <i class="fas fa-heart" style="color:#00ffcc;"></i> untuk kemudahanmu</p>
+    </div>
+</div>
+
 </body>
 </html>
