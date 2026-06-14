@@ -43,6 +43,16 @@
         .chat-header h2 {
             font-size: 1.2rem;
         }
+        #logoutBtn {
+            background: rgba(255,255,255,0.2);
+            border: none;
+            border-radius: 50%;
+            width: 40px;
+            height: 40px;
+            font-size: 1.2rem;
+            cursor: pointer;
+            color: white;
+        }
         .online-dot {
             width: 10px;
             height: 10px;
@@ -166,7 +176,7 @@
             <h2>Zexzo Support</h2>
             <div><span class="online-dot"></span> <span id="ownerStatusText">Online</span></div>
         </div>
-        <div>🤖</div>
+        <button id="logoutBtn">🚪</button>
     </div>
 
     <div class="chat-container" id="chatContainer"></div>
@@ -186,6 +196,13 @@
         if (!token || !userId) {
             window.location.href = '/Login';
         }
+
+        // ========== LOG OUT ==========
+        document.getElementById('logoutBtn').addEventListener('click', () => {
+            localStorage.removeItem('token');
+            localStorage.removeItem('userId');
+            window.location.href = '/Login';
+        });
 
         let ownerStatus = 'on';
         let lastMessageId = 0;
@@ -250,13 +267,14 @@
             
             let content = '';
             
-            if (msg.has_image && msg.image_file_id) {
-                const photoUrl = `/api/get-photo?file_id=${encodeURIComponent(msg.image_file_id)}`;
-                content += `<img src="${photoUrl}" class="chat-image" style="max-width:150px; max-height:150px; border-radius:10px; cursor:pointer;" onclick="window.open('${photoUrl}')">`;
-            }
-            
             if (msg.message && msg.message.trim()) {
-                content += `<div>${escapeHtml(msg.message)}</div>`;
+                let messageText = msg.message;
+                // Deteksi link dan bikin klikable
+                if (messageText.match(/^https?:\/\//i)) {
+                    content += `<div><a href="${escapeHtml(messageText)}" target="_blank" style="color:#0066cc;">🔗 ${escapeHtml(messageText)}</a></div>`;
+                } else {
+                    content += `<div>${escapeHtml(messageText)}</div>`;
+                }
             }
             
             div.innerHTML = `
