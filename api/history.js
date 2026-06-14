@@ -26,7 +26,7 @@ export default async function handler(req, res) {
 
     let query = supabase
         .from('messages')
-        .select('id, message, sender, created_at')
+        .select('id, message, sender, created_at, image_file_id, has_image')
         .eq('user_id', userId)
         .order('id', { ascending: true });
 
