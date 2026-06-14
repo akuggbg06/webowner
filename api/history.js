@@ -20,18 +20,23 @@ export default async function handler(req, res) {
     }
 
     const { userId: queryUserId, after } = req.query;
-    if (queryUserId != userId) {
+    
+    // Validasi userId
+    if (!queryUserId || parseInt(queryUserId) !== userId) {
         return res.status(403).json({ success: false, message: 'Forbidden' });
     }
 
+    // Bangun query
     let query = supabase
         .from('messages')
         .select('id, message, sender, created_at, image_file_id, has_image')
         .eq('user_id', userId)
         .order('id', { ascending: true });
 
+    // Filter jika ada parameter 'after'
     if (after && !isNaN(parseInt(after))) {
-        query = query.gt('id', parseInt(after));
+        const afterId = parseInt(after);
+        query = query.gt('id', afterId);
     }
 
     const { data: messages, error } = await query;
@@ -41,5 +46,9 @@ export default async function handler(req, res) {
         return res.status(500).json({ success: false, message: 'Gagal mengambil history' });
     }
 
-    return res.status(200).json({ success: true, messages: messages || [] });
+    // Kirim response
+    return res.status(200).json({ 
+        success: true, 
+        messages: messages || [] 
+    });
 }
