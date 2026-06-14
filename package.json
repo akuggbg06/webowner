@@ -1,7 +1,6 @@
 {
   "name": "zexzo-web",
   "version": "1.0.0",
-  "description": "Zexzo Chat Web with Telegram Bot & Photo",
   "dependencies": {
     "@supabase/supabase-js": "^2.39.0",
     "jsonwebtoken": "^9.0.2",
