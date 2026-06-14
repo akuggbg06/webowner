@@ -102,13 +102,6 @@
             margin-top: 5px;
             text-align: right;
         }
-        .chat-image {
-            max-width: 200px;
-            max-height: 200px;
-            border-radius: 10px;
-            cursor: pointer;
-            margin-top: 5px;
-        }
         .chat-input-area {
             background: #1e2a3a;
             padding: 12px 20px;
@@ -133,8 +126,8 @@
             cursor: pointer;
             font-size: 1.3rem;
         }
-        #attachBtn {
-            background: #128C7E;
+        #buktiBtn {
+            background: #ff8800;
             color: white;
         }
         #sendBtn {
@@ -148,46 +141,21 @@
             color: #ffaaaa;
             font-size: 0.8rem;
         }
-        .preview-container {
-            display: none;
-            padding: 10px;
-            background: #1e2a3a;
-            margin: 5px 20px;
-            border-radius: 20px;
+        .footer-note {
+            text-align: center;
+            margin-top: 10px;
+            font-size: 0.7rem;
+            color: #558888;
         }
-        .preview-inner {
-            display: flex;
-            align-items: center;
-            gap: 10px;
-            flex-wrap: wrap;
-        }
-        .preview-img {
-            max-width: 80px;
-            max-height: 80px;
-            border-radius: 10px;
-        }
-        .preview-name {
-            color: white;
-            flex: 1;
-            font-size: 0.8rem;
-            word-break: break-all;
-        }
-        .cancel-preview {
-            background: red;
-            border: none;
-            border-radius: 50%;
-            width: 30px;
-            height: 30px;
-            color: white;
-            cursor: pointer;
-        }
-        .send-photo-btn {
-            background: #25D366;
-            border: none;
-            border-radius: 20px;
-            padding: 8px 15px;
-            color: white;
-            cursor: pointer;
+        @media (max-width: 480px) {
+            .message {
+                max-width: 90%;
+            }
+            .chat-input-area button {
+                width: 42px;
+                height: 42px;
+                font-size: 1.1rem;
+            }
         }
     </style>
 </head>
@@ -203,17 +171,13 @@
 
     <div class="chat-container" id="chatContainer"></div>
 
-    <div class="preview-container" id="previewContainer">
-        <div class="preview-inner" id="previewInner"></div>
-    </div>
-
     <div class="chat-input-area">
-        <button id="attachBtn">📎</button>
+        <button id="buktiBtn">📸</button>
         <input type="text" id="messageInput" placeholder="Ketik pesan..." autocomplete="off">
         <button id="sendBtn">📤</button>
     </div>
-    <input type="file" id="fileInput" accept="image/*" style="display:none">
     <div id="offlineWarning" class="owner-offline" style="display:none;">⚠️ Owner sedang offline, coba lagi nanti ⚠️</div>
+    <div class="footer-note">💡 Klik 📸 untuk upload bukti pembayaran</div>
 
     <script>
         const token = localStorage.getItem('token');
@@ -238,16 +202,16 @@
                 warning.style.display = ownerStatus === 'off' ? 'block' : 'none';
                 const input = document.getElementById('messageInput');
                 const sendBtn = document.getElementById('sendBtn');
-                const attachBtn = document.getElementById('attachBtn');
+                const buktiBtn = document.getElementById('buktiBtn');
                 if (ownerStatus === 'off') {
                     input.disabled = true;
                     sendBtn.disabled = true;
-                    attachBtn.disabled = true;
+                    buktiBtn.disabled = true;
                     input.placeholder = 'Owner sedang offline...';
                 } else {
                     input.disabled = false;
                     sendBtn.disabled = false;
-                    attachBtn.disabled = false;
+                    buktiBtn.disabled = false;
                     input.placeholder = 'Ketik pesan...';
                 }
             } catch (err) {
@@ -287,7 +251,8 @@
             let content = '';
             
             if (msg.has_image && msg.image_file_id) {
-                content += `<img src="/api/get-photo?file_id=${encodeURIComponent(msg.image_file_id)}" class="chat-image" onclick="window.open(this.src)" onerror="this.src='https://via.placeholder.com/200?text=Gambar'">`;
+                const photoUrl = `/api/get-photo?file_id=${encodeURIComponent(msg.image_file_id)}`;
+                content += `<img src="${photoUrl}" class="chat-image" style="max-width:150px; max-height:150px; border-radius:10px; cursor:pointer;" onclick="window.open('${photoUrl}')">`;
             }
             
             if (msg.message && msg.message.trim()) {
@@ -372,68 +337,9 @@
             pollingInterval = setInterval(pollNewMessages, 3000);
         }
 
-        // ========== FITUR FOTO ==========
-        const attachBtn = document.getElementById('attachBtn');
-        const fileInput = document.getElementById('fileInput');
-        const previewContainer = document.getElementById('previewContainer');
-        const previewInner = document.getElementById('previewInner');
-
-        attachBtn.addEventListener('click', () => {
-            fileInput.click();
-        });
-
-        fileInput.addEventListener('change', async (e) => {
-            const file = e.target.files[0];
-            if (!file) return;
-            
-            if (file.size > 15 * 1024 * 1024) {
-                alert('Ukuran foto maksimal 15MB!');
-                return;
-            }
-            
-            if (!file.type.startsWith('image/')) {
-                alert('Hanya file gambar yang diperbolehkan!');
-                return;
-            }
-            
-            const reader = new FileReader();
-            reader.onload = function(event) {
-                previewContainer.style.display = 'block';
-                previewInner.innerHTML = `
-                    <img src="${event.target.result}" class="preview-img">
-                    <span class="preview-name">${file.name.substring(0, 30)}${file.name.length > 30 ? '...' : ''}</span>
-                    <button class="cancel-preview" id="cancelPreviewBtn">✕</button>
-                    <button class="send-photo-btn" id="sendPhotoBtn">Kirim</button>
-                `;
-                
-                document.getElementById('cancelPreviewBtn')?.addEventListener('click', () => {
-                    previewContainer.style.display = 'none';
-                    fileInput.value = '';
-                });
-                
-                document.getElementById('sendPhotoBtn')?.addEventListener('click', async () => {
-                    previewContainer.style.display = 'none';
-                    
-                    const formData = new FormData();
-                    formData.append('photo', file);
-                    formData.append('userId', userId);
-                    
-                    const res = await fetch('/api/send-photo', {
-                        method: 'POST',
-                        headers: { 'Authorization': `Bearer ${token}` },
-                        body: formData
-                    });
-                    
-                    const data = await res.json();
-                    if (data.success) {
-                        startPolling();
-                    } else {
-                        alert(data.message || 'Gagal kirim foto');
-                    }
-                    fileInput.value = '';
-                });
-            };
-            reader.readAsDataURL(file);
+        // Tombol bukti
+        document.getElementById('buktiBtn').addEventListener('click', () => {
+            window.location.href = '/Bukti';
         });
 
         document.getElementById('sendBtn').addEventListener('click', sendMessage);
