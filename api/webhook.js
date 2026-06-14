@@ -43,4 +43,111 @@ export default async function handler(req, res) {
                     text: '❌ Format salah! Gunakan: /b [user_id] [pesan]'
                 })
             });
-            return res.status(200
+            return res.status(200).send('OK');
+        }
+
+        const { error: insertError } = await supabase
+            .from('messages')
+            .insert([
+                {
+                    user_id: userId,
+                    message: replyMessage,
+                    sender: 'owner'
+                }
+            ]);
+
+        if (insertError) {
+            await fetch(`https://api.telegram.org/bot${BOT_TOKEN}/sendMessage`, {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({
+                    chat_id: OWNER_ID,
+                    text: `❌ Gagal mengirim pesan ke user ID ${userId}. Error: ${insertError.message}`
+                })
+            });
+            return res.status(200).send('OK');
+        }
+
+        await fetch(`https://api.telegram.org/bot${BOT_TOKEN}/sendMessage`, {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({
+                chat_id: OWNER_ID,
+                text: `✅ Pesan terkirim ke user ID ${userId}: "${replyMessage}"`
+            })
+        });
+    }
+
+    else if (text === '/off') {
+        await supabase
+            .from('settings')
+            .upsert({ key: 'owner_status', value: 'off' });
+
+        await fetch(`https://api.telegram.org/bot${BOT_TOKEN}/sendMessage`, {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({
+                chat_id: OWNER_ID,
+                text: '🔴 Bot dimatikan. User tidak bisa chat. Ketik /on untuk mengaktifkan kembali.'
+            })
+        });
+    }
+
+    else if (text === '/on') {
+        await supabase
+            .from('settings')
+            .upsert({ key: 'owner_status', value: 'on' });
+
+        await fetch(`https://api.telegram.org/bot${BOT_TOKEN}/sendMessage`, {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({
+                chat_id: OWNER_ID,
+                text: '🟢 Bot dihidupkan. User bisa chat sekarang.'
+            })
+        });
+    }
+
+    else if (text.startsWith('/deluser ')) {
+        const parts = text.split(' ');
+        const userId = parseInt(parts[1]);
+
+        if (isNaN(userId)) {
+            await fetch(`https://api.telegram.org/bot${BOT_TOKEN}/sendMessage`, {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({
+                    chat_id: OWNER_ID,
+                    text: '❌ Format salah! Gunakan: /deluser [user_id]'
+                })
+            });
+            return res.status(200).send('OK');
+        }
+
+        await supabase.from('messages').delete().eq('user_id', userId);
+        await supabase.from('users').delete().eq('id', userId);
+
+        await fetch(`https://api.telegram.org/bot${BOT_TOKEN}/sendMessage`, {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({
+                chat_id: OWNER_ID,
+                text: `✅ User ID ${userId} dan semua history chatnya telah dihapus.`
+            })
+        });
+    }
+
+    else {
+        await fetch(`https://api.telegram.org/bot${BOT_TOKEN}/sendMessage`, {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({
+                chat_id: OWNER_ID,
+                text: `📋 *Command yang tersedia:*\n\n/b [user_id] [pesan] - Balas user\n/off - Matikan bot\n/on - Hidupkan bot\n/deluser [user_id] - Hapus user & history\n\nℹ️ ${text} bukan command yang dikenal.`,
+                parse_mode: 'Markdown'
+            })
+        });
+    }
+
+    return res.status(200).send('OK');
+}
