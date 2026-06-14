@@ -1,8 +1,9 @@
 {
   "rewrites": [
-    { "source": "/Login", "destination": "/Login/index.html" },
-    { "source": "/Register", "destination": "/Register/index.html" },
-    { "source": "/Chat", "destination": "/Chat/index.html" },
+    { "source": "/Login", "destination": "/login/index.html" },
+    { "source": "/Register", "destination": "/register/index.html" },
+    { "source": "/Chat", "destination": "/chat/index.html" },
+    { "source": "/Bukti", "destination": "/bukti/index.html" },
     { "source": "/api/(.*)", "destination": "/api/$1" }
   ]
 }
