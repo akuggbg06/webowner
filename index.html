@@ -4,7 +4,6 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
     <title>Zexzo | Jasa Gendong & Layanan Digital</title>
-    <!-- Google Fonts & Font Awesome Icons -->
     <link href="https://fonts.googleapis.com/css2?family=Inter:opsz,wght@14..32,300;14..32,400;14..32,500;14..32,600;14..32,700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
     <style>
@@ -116,7 +115,7 @@
         }
 
         .hero-content h1 {
-            font-size: 3.2rem;
+            font-size: 3rem;
             font-weight: 800;
             line-height: 1.2;
             margin-bottom: 20px;
@@ -163,9 +162,9 @@
         /* ========== CARD LAYANAN ========== */
         .section-title {
             text-align: center;
-            font-size: 2.2rem;
+            font-size: 2rem;
             font-weight: 700;
-            margin-bottom: 48px;
+            margin: 40px 0 30px;
         }
 
         .section-title span {
@@ -176,24 +175,28 @@
         }
 
         .card-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            display: flex;
+            justify-content: center;
             gap: 30px;
-            margin: 40px 0 60px;
+            margin: 20px 0 40px;
+            flex-wrap: wrap;
         }
 
         .service-card {
             background: rgba(255,255,255,0.04);
             backdrop-filter: blur(10px);
             border-radius: 28px;
-            padding: 32px 24px;
+            padding: 32px 28px;
             text-align: center;
             border: 1px solid rgba(255,255,255,0.08);
             transition: all 0.25s ease;
+            flex: 1;
+            min-width: 260px;
+            max-width: 320px;
         }
 
         .service-card:hover {
-            transform: translateY(-8px);
+            transform: translateY(-6px);
             border-color: rgba(0,255,204,0.4);
             box-shadow: 0 20px 35px -15px rgba(0,0,0,0.4);
         }
@@ -224,52 +227,35 @@
             font-size: 0.85rem;
         }
 
-        /* ========== CTA ========== */
-        .cta-section {
-            background: linear-gradient(120deg, #00222b, #00121a);
-            border-radius: 48px;
-            padding: 60px 40px;
-            text-align: center;
+        /* ========== IKLAN / SPACE PROMO ========== */
+        .iklan-section {
+            background: linear-gradient(120deg, #001e2b, #00121a);
+            border-radius: 28px;
+            padding: 30px;
             margin: 40px 0;
+            text-align: center;
             border: 1px solid rgba(0,255,204,0.2);
         }
 
-        .cta-section h2 {
-            font-size: 2rem;
-            margin-bottom: 16px;
-        }
-
-        .cta-buttons {
-            display: flex;
-            gap: 20px;
-            justify-content: center;
-            margin-top: 32px;
-            flex-wrap: wrap;
-        }
-
-        .btn-large {
-            padding: 14px 36px;
+        .iklan-placeholder {
+            background: rgba(0,0,0,0.3);
+            border-radius: 20px;
+            padding: 40px;
             font-size: 1rem;
-            border-radius: 60px;
-            font-weight: 600;
-            text-decoration: none;
-            display: inline-block;
+            color: #7e95b0;
+            border: 1px dashed rgba(0,255,204,0.3);
         }
 
-        .btn-primary {
-            background: linear-gradient(95deg, #00ffcc, #0088ff);
-            color: #0a0f1e;
-        }
-
-        .btn-secondary {
-            background: rgba(255,255,255,0.05);
-            border: 1px solid rgba(0,255,204,0.5);
-            color: white;
+        .iklan-placeholder i {
+            font-size: 2rem;
+            margin-bottom: 12px;
+            display: block;
+            color: #00ffcc;
         }
 
         /* ========== FOOTER ========== */
         .footer {
-            margin-top: 80px;
+            margin-top: 60px;
             padding: 40px 0 30px;
             border-top: 1px solid rgba(255,255,255,0.05);
             text-align: center;
@@ -313,8 +299,9 @@
             .hero-image {
                 order: -1;
             }
-            .btn-large {
-                padding: 12px 24px;
+            .card-grid {
+                flex-direction: column;
+                align-items: center;
             }
         }
     </style>
@@ -322,28 +309,24 @@
 <body>
 
 <div class="container">
-    <!-- NAVIGATION -->
+    <!-- NAVIGASI -->
     <div class="navbar">
         <div class="logo">ZEXZO</div>
         <div class="nav-links">
             <a href="#">Beranda</a>
-            <a href="/Chat">Dashboard</a>
             <a href="/Bukti">Kirim Bukti</a>
             <a href="/Login" class="btn-outline">Login</a>
             <a href="/Register" class="btn-solid">Daftar</a>
         </div>
     </div>
 
-    <!-- HERO SECTION -->
+    <!-- HERO -->
     <div class="hero">
         <div class="hero-content">
             <div class="hero-badge">🚀 Jasa Gendong Digital</div>
             <h1>Gendongin tugasmu <br> 1 bintang cuma 1k</h1>
-            <p class="hero-desc">Jasgen solusi praktis buat lo yang butuh bantuan gendong barang, temenin event, atau apapun itu. Cepat, aman, dan terpercaya.</p>
-            <div class="cta-buttons" style="justify-content: flex-start;">
-                <a href="/Register" class="btn-large btn-primary">Mulai Sekarang</a>
-                <a href="/Chat" class="btn-large btn-secondary">💬 Live Chat</a>
-            </div>
+            <p class="hero-desc">Jasgen solusi praktis buat lo yang butuh bantuan gendong barang, temenin event, atau apapun itu. Cepat, aman, terpercaya.</p>
+            <a href="/Register" class="btn-solid" style="display: inline-block; padding: 12px 32px; font-size: 1rem;">Mulai Sekarang</a>
             <div class="hero-stats">
                 <div class="stat-item"><h3>50+</h3><p>User aktif</p></div>
                 <div class="stat-item"><h3>24/7</h3><p>Support</p></div>
@@ -351,12 +334,12 @@
             </div>
         </div>
         <div class="hero-image">
-            <i class="fas fa-rocket"></i>
-            <p style="margin-top: 20px; color:#a0b3d9;">✨ siap gendong kapan aja ✨</p>
+            <i class="fas fa-boxes"></i>
+            <p style="margin-top: 20px; color:#a0b3d9;">siap gendong kapan aja 📦</p>
         </div>
     </div>
 
-    <!-- LAYANAN UNGGULAN (CARD) -->
+    <!-- LAYANAN UNGGULAN (hanya Jasgen + Real-time Chat) -->
     <div class="section-title">
         <span>Layanan</span> Unggulan
     </div>
@@ -373,27 +356,14 @@
             <p>Chat langsung dengan admin via dashboard. Balasan cepat & ramah.</p>
             <span class="price-tag">gratis 24 jam</span>
         </div>
-        <div class="service-card">
-            <div class="service-icon">🤖</div>
-            <h3>Bot Telegram</h3>
-            <p>Owner bisa bales otomatis & kelola user langsung dari Telegram.</p>
-            <span class="price-tag">/on /off /b</span>
-        </div>
-        <div class="service-card">
-            <div class="service-icon">🔒</div>
-            <h3>History Permanen</h3>
-            <p>Semua chat tersimpan di database. Aman & bisa diakses kapan saja.</p>
-            <span class="price-tag">private per user</span>
-        </div>
     </div>
 
-    <!-- CTA TEMPLATEMONSTER STYLE -->
-    <div class="cta-section">
-        <h2>Mulai pakai <span style="color:#00ffcc;">Zexzo</span> sekarang</h2>
-        <p style="max-width: 600px; margin: 0 auto; color:#cbd5e6;">Daftar cuma 1 menit. Langsung dapet akses chat & kirim bukti pembayaran ke owner.</p>
-        <div class="cta-buttons">
-            <a href="/Register" class="btn-large btn-primary">📝 Daftar Sekarang</a>
-            <a href="/Login" class="btn-large btn-secondary">🔐 Login</a>
+    <!-- TEMPAT IKLAN (bisa kamu isi sendiri) -->
+    <div class="iklan-section">
+        <div class="iklan-placeholder">
+            <i class="fas fa-ad"></i>
+            <strong>Space Iklan / Promo</strong><br>
+            <span style="font-size: 0.8rem;">Taruh banner, teks promo, atau apapun di sini. Edit di file index.html bagian "iklan-section".</span>
         </div>
     </div>
 
@@ -404,8 +374,8 @@
             <a href="https://tiktok.com/@zexzo_example" target="_blank"><i class="fab fa-tiktok"></i></a>
             <a href="#"><i class="fab fa-instagram"></i></a>
         </div>
-        <p>© 2025 Zexzo — Jasa Gendong 1 bintang 1k | Digital support 24/7</p>
-        <p style="margin-top: 12px;">🚀 Dibangun dengan <i class="fas fa-heart" style="color:#00ffcc;"></i> untuk kemudahanmu</p>
+        <p>© 2025 Zexzo — Jasa Gendong 1 bintang 1k | Support 24/7</p>
+        <p style="margin-top: 12px;">💙 Dibangun untuk kemudahanmu</p>
     </div>
 </div>
 
