@@ -45,16 +45,17 @@ export default async function handler(req, res) {
     
     // Parse multipart form data
     const busboy = require('busboy');
-    const { Readable } = require('stream');
     
     let photoBuffer = null;
     let filename = null;
+    let mimetype = null;
     
     await new Promise((resolve, reject) => {
         const bb = busboy({ headers: req.headers });
         
         bb.on('file', (name, file, info) => {
             filename = info.filename;
+            mimetype = info.mimeType;
             const chunks = [];
             file.on('data', (data) => chunks.push(data));
             file.on('end', () => {
@@ -71,15 +72,20 @@ export default async function handler(req, res) {
         return res.status(400).json({ success: false, message: 'Tidak ada foto' });
     }
     
-    // Upload ke grup Telegram
+    // Upload ke grup Telegram menggunakan multipart/form-data
     const form = new FormData();
     form.append('chat_id', GROUP_CHAT_ID);
-    form.append('photo', photoBuffer, { filename: filename || 'photo.jpg' });
+    form.append('photo', photoBuffer, {
+        filename: filename || 'photo.jpg',
+        contentType: mimetype || 'image/jpeg'
+    });
     
     const tgRes = await fetch(`https://api.telegram.org/bot${BOT_TOKEN}/sendPhoto`, {
         method: 'POST',
-        body: form
+        body: form,
+        headers: form.getHeaders()
     });
+    
     const tgData = await tgRes.json();
     
     if (!tgData.ok) {
@@ -87,7 +93,14 @@ export default async function handler(req, res) {
         return res.status(500).json({ success: false, message: 'Gagal upload ke Telegram: ' + tgData.description });
     }
     
-    const fileId = tgData.result.photo[tgData.result.photo.length - 1].file_id;
+    // Ambil file_id dari response
+    let fileId = null;
+    if (tgData.result && tgData.result.photo) {
+        const photos = tgData.result.photo;
+        fileId = photos[photos.length - 1].file_id;
+    } else {
+        return res.status(500).json({ success: false, message: 'Gagal mendapatkan file_id dari Telegram' });
+    }
     
     // Simpan ke database
     const { error } = await supabase
@@ -117,7 +130,7 @@ export default async function handler(req, res) {
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({
             chat_id: process.env.OWNER_ID,
-            text: `📸 *Foto dari User*\n\n👤 *Username:* ${userData?.username || 'unknown'}\n🆔 *User ID:* ${userId}`,
+            text: `📸 *Foto dari User*\n\n👤 *Username:* ${userData?.username || 'unknown'}\n🆔 *User ID:* ${userId}\n\n📎 Balas pesan ini lalu kirim foto untuk membalas dengan foto.`,
             parse_mode: 'Markdown'
         })
     });
