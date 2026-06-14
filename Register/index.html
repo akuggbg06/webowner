@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Zexzo | Register</title>
+    <link rel="stylesheet" href="/style.css">
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1>📝 REGISTER</h1>
+            <p class="tagline">Buat akun Zexzo baru</p>
+        </div>
+
+        <div class="form-group">
+            <label>Username</label>
+            <input type="text" id="username" placeholder="Pilih username">
+        </div>
+        <div class="form-group">
+            <label>Password</label>
+            <input type="password" id="password" placeholder="Buat password">
+        </div>
+
+        <button class="btn btn-chat" id="registerBtn" style="width:100%">Daftar</button>
+        <div id="message" class="error-msg"></div>
+
+        <div class="footer-note">
+            <p>Sudah punya akun? <a href="/Login" style="color:#00ffcc">Login di sini</a></p>
+        </div>
+    </div>
+
+    <script>
+        document.getElementById('registerBtn').addEventListener('click', async () => {
+            const username = document.getElementById('username').value.trim();
+            const password = document.getElementById('password').value.trim();
+            const message = document.getElementById('message');
+
+            if (!username || !password) {
+                message.textContent = 'Username dan password harus diisi!';
+                return;
+            }
+
+            if (password.length < 4) {
+                message.textContent = 'Password minimal 4 karakter!';
+                return;
+            }
+
+            try {
+                const response = await fetch('/api/auth-register', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ username, password })
+                });
+
+                const data = await response.json();
+
+                if (data.success) {
+                    message.style.color = '#66ff66';
+                    message.textContent = 'Pendaftaran berhasil! Redirect ke login...';
+                    setTimeout(() => {
+                        window.location.href = '/Login';
+                    }, 2000);
+                } else {
+                    message.textContent = data.message || 'Pendaftaran gagal!';
+                }
+            } catch (err) {
+                message.textContent = 'Terjadi kesalahan, coba lagi.';
+            }
+        });
+    </script>
+</body>
+</html>
