@@ -6,13 +6,38 @@
     <title>Zexzo | Kirim Bukti</title>
     <link rel="stylesheet" href="/style.css">
     <style>
-        .info-text {
+        .info-box {
             background: rgba(0,50,50,0.5);
-            padding: 15px;
+            padding: 20px;
+            border-radius: 20px;
+            margin-bottom: 25px;
+            border-left: 4px solid #00ffcc;
+        }
+        .info-box h3 {
+            color: #00ffcc;
+            margin-bottom: 10px;
+        }
+        .info-box p {
+            color: #bbffee;
+            font-size: 0.9rem;
+            line-height: 1.5;
+        }
+        .step {
+            background: rgba(0,0,0,0.3);
+            padding: 12px;
             border-radius: 15px;
-            margin-bottom: 20px;
-            font-size: 0.85rem;
-            color: #88ffdd;
+            margin: 15px 0;
+        }
+        .step-number {
+            display: inline-block;
+            background: #00ffcc;
+            color: #0a2a3e;
+            width: 25px;
+            height: 25px;
+            border-radius: 50%;
+            text-align: center;
+            font-weight: bold;
+            margin-right: 10px;
         }
         .link-input {
             width: 100%;
@@ -35,6 +60,12 @@
             font-family: inherit;
             resize: vertical;
         }
+        .btn-catbox {
+            background: linear-gradient(90deg, #ff8800, #cc6600);
+            margin-bottom: 20px;
+            display: inline-block;
+            text-decoration: none;
+        }
         .back-chat {
             display: inline-block;
             margin-top: 20px;
@@ -45,6 +76,7 @@
             font-size: 0.7rem;
             color: #88aacc;
             margin-top: 5px;
+            margin-bottom: 15px;
         }
     </style>
 </head>
@@ -52,22 +84,35 @@
     <div class="container">
         <div class="header">
             <h1>📸 KIRIM BUKTI</h1>
-            <p class="tagline">Kirim bukti transfer / pembayaran</p>
+            <p class="tagline">Upload & kirim bukti pembayaran</p>
         </div>
 
-        <div class="info-text">
-            ⚠️ Upload bukti dengan cara:<br>
-            1. Upload foto ke <strong>imgur.com</strong> atau <strong>postimage.io</strong><br>
-            2. Copy link gambarnya<br>
-            3. Paste link di bawah
+        <div class="info-box">
+            <h3>📋 Cara Upload Bukti:</h3>
+            <div class="step">
+                <span class="step-number">1</span> Buka <strong>files.catbox.moe</strong>
+            </div>
+            <div class="step">
+                <span class="step-number">2</span> Klik <strong>"Select or drop files"</strong> → pilih foto bukti
+            </div>
+            <div class="step">
+                <span class="step-number">3</span> Tunggu upload selesai → copy link yang muncul
+            </div>
+            <div class="step">
+                <span class="step-number">4</span> Paste link-nya di bawah + keterangan → kirim
+            </div>
         </div>
 
-        <input type="text" id="linkFoto" class="link-input" placeholder="Masukkan link foto (https://...jpg atau ...png)">
-        <div class="example">Contoh: https://i.imgur.com/xxxxx.jpg</div>
+        <a href="https://files.catbox.moe" target="_blank" class="btn btn-catbox" style="width:100%; text-align:center; display:block;">
+            🔗 Buka Catbox.moe (Upload Foto)
+        </a>
+
+        <input type="text" id="linkFoto" class="link-input" placeholder="Paste link dari Catbox (https://files.catbox.moe/xxxxx)">
+        <div class="example">Contoh: https://files.catbox.moe/abc123.jpg</div>
         
-        <textarea id="keterangan" class="keterangan" rows="3" placeholder="Tambahkan keterangan (opsional)..."></textarea>
+        <textarea id="keterangan" class="keterangan" rows="3" placeholder="Tambahkan keterangan (opsional) contoh: Bukti transfer Zexzo"></textarea>
         
-        <button id="kirimBtn" class="btn btn-chat" style="width:100%">📤 Kirim Bukti</button>
+        <button id="kirimBtn" class="btn btn-chat" style="width:100%">📤 Kirim Bukti ke Admin</button>
         
         <a href="/Chat" class="back-chat">← Kembali ke Chat</a>
         
@@ -88,17 +133,22 @@
         const statusMsg = document.getElementById('statusMsg');
         
         kirimBtn.addEventListener('click', async () => {
-            const link = linkFoto.value.trim();
+            let link = linkFoto.value.trim();
             
             if (!link) {
                 statusMsg.style.color = '#ff6666';
-                statusMsg.textContent = 'Masukkan link foto!';
+                statusMsg.textContent = 'Masukkan link foto dari Catbox!';
                 return;
             }
             
-            if (!link.startsWith('http://') && !link.startsWith('https://')) {
+            // Auto lengkapi domain kalau cuma kasih kode
+            if (!link.startsWith('http')) {
+                link = 'https://files.catbox.moe/' + link.replace(/^\/+/, '');
+            }
+            
+            if (!link.startsWith('https://files.catbox.moe/')) {
                 statusMsg.style.color = '#ff6666';
-                statusMsg.textContent = 'Link harus dimulai dengan http:// atau https://';
+                statusMsg.textContent = 'Link harus dari files.catbox.moe ya!';
                 return;
             }
             
@@ -136,7 +186,7 @@
                 }
             } catch (err) {
                 statusMsg.style.color = '#ff6666';
-                statusMsg.textContent = 'Terjadi kesalahan: ' + err.message;
+                statusMsg.textContent = 'Terjadi kesalahan, coba lagi';
                 kirimBtn.disabled = false;
                 kirimBtn.textContent = '📤 Kirim Bukti';
             }
