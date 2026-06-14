@@ -4,84 +4,57 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
     <title>Zexzo | Chat</title>
-    <link rel="stylesheet" href="/style.css">
     <style>
         * {
             margin: 0;
             padding: 0;
             box-sizing: border-box;
         }
-
         body {
-            background: linear-gradient(135deg, #0a0f1e 0%, #0a2a3e 100%);
+            background: linear-gradient(135deg, #075E54, #128C7E);
             font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
             height: 100vh;
             display: flex;
             flex-direction: column;
-            overflow: hidden;
         }
-
-        /* Header Chat */
         .chat-header {
-            background: linear-gradient(90deg, #075E54, #128C7E);
+            background: #075E54;
             padding: 15px 20px;
             display: flex;
             align-items: center;
             gap: 15px;
-            box-shadow: 0 2px 10px rgba(0,0,0,0.2);
+            color: white;
         }
-
         .back-btn {
             color: white;
             text-decoration: none;
             font-size: 1.5rem;
-            display: flex;
-            align-items: center;
-            justify-content: center;
+            background: rgba(255,255,255,0.2);
             width: 40px;
             height: 40px;
             border-radius: 50%;
-            background: rgba(255,255,255,0.1);
+            display: flex;
+            align-items: center;
+            justify-content: center;
         }
-
-        .back-btn:hover {
-            background: rgba(255,255,255,0.2);
-        }
-
         .chat-header .info {
             flex: 1;
         }
-
         .chat-header h2 {
-            color: white;
             font-size: 1.2rem;
         }
-
-        .chat-header p {
-            color: #dcf8c6;
-            font-size: 0.75rem;
-        }
-
-        .chat-header .status {
-            display: flex;
-            align-items: center;
-            gap: 5px;
-        }
-
         .online-dot {
             width: 10px;
             height: 10px;
             background: #25D366;
             border-radius: 50%;
+            display: inline-block;
             animation: pulse 1.5s infinite;
         }
-
         @keyframes pulse {
             0%, 100% { opacity: 1; }
             50% { opacity: 0.5; }
         }
-
-        /* Container Chat */
         .chat-container {
             flex: 1;
             overflow-y: auto;
@@ -90,29 +63,22 @@
             flex-direction: column;
             gap: 12px;
             background-image: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100" opacity="0.05"><path fill="none" d="M10,50 L90,50 M50,10 L50,90" stroke="white" stroke-width="1"/><circle cx="50" cy="50" r="40" stroke="white" stroke-width="1" fill="none"/></svg>');
-            background-size: 60px;
         }
-
-        /* Bubble Chat */
         .message {
             display: flex;
             max-width: 80%;
             animation: fadeIn 0.3s ease;
         }
-
         @keyframes fadeIn {
             from { opacity: 0; transform: translateY(10px); }
             to { opacity: 1; transform: translateY(0); }
         }
-
         .message.outgoing {
             align-self: flex-end;
         }
-
         .message.incoming {
             align-self: flex-start;
         }
-
         .bubble {
             padding: 10px 14px;
             border-radius: 18px;
@@ -120,39 +86,28 @@
             word-wrap: break-word;
             max-width: 100%;
         }
-
         .outgoing .bubble {
             background: #dcf8c6;
             color: #1a2a3a;
             border-bottom-right-radius: 4px;
         }
-
         .incoming .bubble {
             background: white;
             color: #1a2a3a;
             border-bottom-left-radius: 4px;
         }
-
         .message-time {
             font-size: 0.65rem;
             color: #888;
             margin-top: 5px;
             text-align: right;
         }
-
-        .incoming .message-time {
-            text-align: left;
-        }
-
-        /* Input Area */
         .chat-input-area {
             background: #1e2a3a;
             padding: 12px 20px;
             display: flex;
             gap: 12px;
-            border-top: 1px solid rgba(255,255,255,0.1);
         }
-
         .chat-input-area input {
             flex: 1;
             padding: 12px 16px;
@@ -163,31 +118,23 @@
             font-size: 1rem;
             outline: none;
         }
-
-        .chat-input-area input::placeholder {
-            color: #8899aa;
-        }
-
         .chat-input-area button {
             width: 48px;
             height: 48px;
             border: none;
             border-radius: 50%;
-            background: linear-gradient(135deg, #25D366, #128C7E);
+            background: #25D366;
             color: white;
             font-size: 1.3rem;
             cursor: pointer;
-            transition: transform 0.2s;
-            display: flex;
-            align-items: center;
-            justify-content: center;
         }
-
-        .chat-input-area button:hover {
-            transform: scale(1.05);
+        .owner-offline {
+            text-align: center;
+            padding: 10px;
+            background: rgba(255,0,0,0.3);
+            color: #ffaaaa;
+            font-size: 0.8rem;
         }
-
-        /* Typing indicator */
         .typing-indicator {
             display: flex;
             align-items: center;
@@ -197,7 +144,6 @@
             border-radius: 18px;
             width: fit-content;
         }
-
         .typing-indicator span {
             width: 8px;
             height: 8px;
@@ -205,162 +151,188 @@
             border-radius: 50%;
             animation: typing 1.4s infinite;
         }
-
         .typing-indicator span:nth-child(2) { animation-delay: 0.2s; }
         .typing-indicator span:nth-child(3) { animation-delay: 0.4s; }
-
         @keyframes typing {
             0%, 60%, 100% { transform: translateY(0); opacity: 0.4; }
             30% { transform: translateY(-8px); opacity: 1; }
         }
-
-        /* Scrollbar */
-        .chat-container::-webkit-scrollbar {
-            width: 5px;
-        }
-        .chat-container::-webkit-scrollbar-track {
-            background: #1e2a3a;
-        }
-        .chat-container::-webkit-scrollbar-thumb {
-            background: #128C7E;
-            border-radius: 10px;
-        }
     </style>
 </head>
 <body>
-    <!-- Header -->
     <div class="chat-header">
         <a href="/" class="back-btn">←</a>
         <div class="info">
             <h2>Zexzo Support</h2>
-            <div class="status">
-                <span class="online-dot"></span>
-                <p>Online</p>
-            </div>
+            <div><span class="online-dot"></span> <span id="ownerStatusText">Online</span></div>
         </div>
-        <div style="font-size: 1.2rem;">🤖</div>
+        <div>🤖</div>
     </div>
 
-    <!-- Container Pesan -->
-    <div class="chat-container" id="chatContainer">
-        <div class="message incoming">
-            <div class="bubble">
-                Halo! Selamat datang di chat Zexzo 👋<br>
-                Ada yang bisa saya bantu?
-                <div class="message-time">Sekarang</div>
-            </div>
-        </div>
-    </div>
+    <div class="chat-container" id="chatContainer"></div>
 
-    <!-- Input Area -->
     <div class="chat-input-area">
         <input type="text" id="messageInput" placeholder="Ketik pesan..." autocomplete="off">
         <button id="sendBtn">📤</button>
     </div>
+    <div id="offlineWarning" class="owner-offline" style="display:none;">⚠️ Owner sedang offline, coba lagi nanti ⚠️</div>
 
     <script>
-        const chatContainer = document.getElementById('chatContainer');
-        const messageInput = document.getElementById('messageInput');
-        const sendBtn = document.getElementById('sendBtn');
+        const token = localStorage.getItem('token');
+        const userId = localStorage.getItem('userId');
 
-        // Fungsi tambah pesan
-        function addMessage(text, isOutgoing = true) {
-            const messageDiv = document.createElement('div');
-            messageDiv.className = `message ${isOutgoing ? 'outgoing' : 'incoming'}`;
-            
-            const now = new Date();
-            const timeString = now.toLocaleTimeString('id-ID', { hour: '2-digit', minute: '2-digit' });
-            
-            messageDiv.innerHTML = `
+        if (!token || !userId) {
+            window.location.href = '/Login';
+        }
+
+        let ownerStatus = 'on';
+        let lastMessageId = 0;
+        let pollingInterval = null;
+
+        async function checkOwnerStatus() {
+            try {
+                const res = await fetch('/api/status');
+                const data = await res.json();
+                ownerStatus = data.status;
+                const statusText = ownerStatus === 'on' ? 'Online' : 'Offline';
+                document.getElementById('ownerStatusText').textContent = statusText;
+                const warning = document.getElementById('offlineWarning');
+                warning.style.display = ownerStatus === 'off' ? 'block' : 'none';
+                const input = document.getElementById('messageInput');
+                const sendBtn = document.getElementById('sendBtn');
+                if (ownerStatus === 'off') {
+                    input.disabled = true;
+                    sendBtn.disabled = true;
+                    input.placeholder = 'Owner sedang offline...';
+                } else {
+                    input.disabled = false;
+                    sendBtn.disabled = false;
+                    input.placeholder = 'Ketik pesan...';
+                }
+            } catch (err) {
+                console.error('Gagal cek status:', err);
+            }
+        }
+
+        async function loadHistory() {
+            try {
+                const res = await fetch(`/api/history?userId=${userId}`, {
+                    headers: { 'Authorization': `Bearer ${token}` }
+                });
+                const data = await res.json();
+                if (data.success && data.messages) {
+                    const container = document.getElementById('chatContainer');
+                    container.innerHTML = '';
+                    data.messages.forEach(msg => {
+                        appendMessage(msg.message, msg.sender === 'user' ? 'outgoing' : 'incoming', msg.created_at);
+                    });
+                    if (data.messages.length > 0) {
+                        lastMessageId = data.messages[data.messages.length - 1].id;
+                    }
+                    scrollToBottom();
+                }
+            } catch (err) {
+                console.error('Gagal load history:', err);
+            }
+        }
+
+        function appendMessage(text, type, timeStr) {
+            const container = document.getElementById('chatContainer');
+            const div = document.createElement('div');
+            div.className = `message ${type}`;
+            const time = timeStr ? new Date(timeStr).toLocaleTimeString('id-ID', { hour: '2-digit', minute: '2-digit' }) : new Date().toLocaleTimeString('id-ID', { hour: '2-digit', minute: '2-digit' });
+            div.innerHTML = `
                 <div class="bubble">
-                    ${text}
-                    <div class="message-time">${timeString}</div>
+                    ${escapeHtml(text)}
+                    <div class="message-time">${time}</div>
                 </div>
             `;
-            
-            chatContainer.appendChild(messageDiv);
-            chatContainer.scrollTop = chatContainer.scrollHeight;
+            container.appendChild(div);
+            scrollToBottom();
         }
 
-        // Fungsi kirim pesan
-        function sendMessage() {
-            const text = messageInput.value.trim();
-            if (text === '') return;
-            
-            // Tampilkan pesan user
-            addMessage(text, true);
-            messageInput.value = '';
-            
-            // Simulasi typing admin
-            showTyping();
-            
-            // Balasan otomatis admin (bisa diubah/ganti dengan API nanti)
-            setTimeout(() => {
-                hideTyping();
-                let reply = getAutoReply(text);
-                addMessage(reply, false);
-            }, 1500);
+        function escapeHtml(text) {
+            const div = document.createElement('div');
+            div.textContent = text;
+            return div.innerHTML;
         }
 
-        // Typing indicator
-        let typingElement = null;
-        
-        function showTyping() {
-            typingElement = document.createElement('div');
-            typingElement.className = 'message incoming';
-            typingElement.innerHTML = `
-                <div class="typing-indicator">
-                    <span></span><span></span><span></span>
-                </div>
-            `;
-            chatContainer.appendChild(typingElement);
-            chatContainer.scrollTop = chatContainer.scrollHeight;
+        function scrollToBottom() {
+            const container = document.getElementById('chatContainer');
+            container.scrollTop = container.scrollHeight;
         }
-        
-        function hideTyping() {
-            if (typingElement) {
-                typingElement.remove();
-                typingElement = null;
+
+        async function sendMessage() {
+            if (ownerStatus === 'off') {
+                alert('Owner sedang offline, coba lagi nanti');
+                return;
+            }
+            const input = document.getElementById('messageInput');
+            const text = input.value.trim();
+            if (!text) return;
+
+            input.value = '';
+
+            try {
+                const res = await fetch('/api/send', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                        'Authorization': `Bearer ${token}`
+                    },
+                    body: JSON.stringify({ userId, message: text })
+                });
+                const data = await res.json();
+                if (data.success) {
+                    appendMessage(text, 'outgoing');
+                    startPolling();
+                } else {
+                    alert(data.message || 'Gagal kirim pesan');
+                }
+            } catch (err) {
+                alert('Gagal kirim pesan');
             }
         }
 
-        // Auto reply (kamu bisa edit sesuka hati!)
-        function getAutoReply(message) {
-            const msg = message.toLowerCase();
-            
-            if (msg.includes('jasgen') || msg.includes('jasa gendong')) {
-                return 'Jasgen: Jasa Gendong 🚀\nHarga 1 bintang = Rp 1.000\nMinat? Silakan order langsung ya!';
+        async function pollNewMessages() {
+            try {
+                const res = await fetch(`/api/history?userId=${userId}&after=${lastMessageId}`, {
+                    headers: { 'Authorization': `Bearer ${token}` }
+                });
+                const data = await res.json();
+                if (data.success && data.messages && data.messages.length > 0) {
+                    data.messages.forEach(msg => {
+                        if (msg.id > lastMessageId && msg.sender === 'owner') {
+                            appendMessage(msg.message, 'incoming', msg.created_at);
+                        }
+                    });
+                    if (data.messages.length > 0) {
+                        lastMessageId = Math.max(...data.messages.map(m => m.id));
+                    }
+                }
+            } catch (err) {
+                console.error('Polling error:', err);
             }
-            if (msg.includes('harga') || msg.includes('price')) {
-                return '💸 Harga Jasgen:\n⭐ 1 bintang = Rp 1.000\n🎉 Diskon khusus 10 bintang = Rp 8.000';
-            }
-            if (msg.includes('order') || msg.includes('pesan')) {
-                return '📝 Untuk order Jasgen, silakan kirim detail:\n- Nama\n- Lokasi jemput\n- Lokasi tujuan\n- Banyak bintang';
-            }
-            if (msg.includes('halo') || msg.includes('hai') || msg.includes('hi') || msg.includes('helo')) {
-                return 'Halo juga! 👋 Ada yang bisa saya bantu?';
-            }
-            if (msg.includes('makasih') || msg.includes('terima kasih') || msg.includes('thanks')) {
-                return 'Sama-sama! 😊 Senang bisa membantu. Kalau ada pertanyaan lagi, tanyakan saja ya!';
-            }
-            if (msg.includes('admin') || msg.includes('cs')) {
-                return 'Saya admin Zexzo. Ada yang bisa dibantu? Silakan tanyakan saja 😊';
-            }
-            if (msg.includes('wa') || msg.includes('whatsapp')) {
-                return '📱 WhatsApp admin: wa.me/6281234567890\nKlik link tersebut untuk chat via WhatsApp!';
-            }
-            
-            return 'Terima kasih pesannya! 🙏 Tim Zexzo akan segera merespon. Ketik "order" untuk info pemesanan Jasgen.';
         }
 
-        // Event listener
-        sendBtn.addEventListener('click', sendMessage);
-        messageInput.addEventListener('keypress', (e) => {
+        function startPolling() {
+            if (pollingInterval) clearInterval(pollingInterval);
+            pollingInterval = setInterval(pollNewMessages, 3000);
+        }
+
+        document.getElementById('sendBtn').addEventListener('click', sendMessage);
+        document.getElementById('messageInput').addEventListener('keypress', (e) => {
             if (e.key === 'Enter') sendMessage();
         });
 
-        // Auto focus input
-        messageInput.focus();
+        async function init() {
+            await checkOwnerStatus();
+            await loadHistory();
+            startPolling();
+            setInterval(checkOwnerStatus, 10000);
+        }
+
+        init();
     </script>
 </body>
 </html>
