@@ -33,6 +33,7 @@
             border: 1px solid rgba(0,255,200,0.3);
             color: white;
             margin-bottom: 20px;
+            font-family: inherit;
         }
         .info-text {
             background: rgba(0,50,50,0.5);
@@ -47,6 +48,10 @@
             margin-top: 20px;
             color: #00ffcc;
             text-decoration: none;
+        }
+        .btn:disabled {
+            opacity: 0.5;
+            cursor: not-allowed;
         }
     </style>
 </head>
@@ -100,7 +105,6 @@
             fileInput.click();
         });
         
-        // Drag & drop
         uploadArea.addEventListener('dragover', (e) => {
             e.preventDefault();
             uploadArea.style.borderColor = '#00ffcc';
@@ -154,7 +158,6 @@
             const formData = new FormData();
             formData.append('photo', selectedFile);
             formData.append('keterangan', keterangan.value);
-            formData.append('userId', userId);
             
             try {
                 const res = await fetch('/api/upload-bukti', {
@@ -163,9 +166,14 @@
                     body: formData
                 });
                 
-                const data = await res.json();
+                let data;
+                try {
+                    data = await res.json();
+                } catch (e) {
+                    throw new Error('Server error, coba lagi');
+                }
                 
-                if (data.success) {
+                if (data.success || data.error === false) {
                     statusMsg.style.color = '#66ff66';
                     statusMsg.textContent = '✅ Bukti berhasil dikirim! Redirect ke chat...';
                     setTimeout(() => {
@@ -173,13 +181,14 @@
                     }, 2000);
                 } else {
                     statusMsg.style.color = '#ff6666';
-                    statusMsg.textContent = data.message || 'Gagal mengirim bukti';
+                    statusMsg.textContent = data.error || data.message || 'Gagal mengirim bukti';
                     uploadBtn.disabled = false;
                     uploadBtn.textContent = '📤 Upload Bukti';
                 }
             } catch (err) {
+                console.error('Upload error:', err);
                 statusMsg.style.color = '#ff6666';
-                statusMsg.textContent = 'Terjadi kesalahan, coba lagi';
+                statusMsg.textContent = 'Terjadi kesalahan: ' + err.message;
                 uploadBtn.disabled = false;
                 uploadBtn.textContent = '📤 Upload Bukti';
             }
