@@ -3,43 +3,78 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Zexzo | Beranda</title>
-    <link rel="stylesheet" href="style.css">
+    <title>Zexzo | Home</title>
+    <link rel="stylesheet" href="/style.css">
+    <style>
+        .hero {
+            text-align: center;
+            padding: 60px 20px;
+        }
+        .hero h1 {
+            font-size: 3.5rem;
+            margin-bottom: 20px;
+        }
+        .hero p {
+            font-size: 1.2rem;
+            margin-bottom: 40px;
+            color: #bbffee;
+        }
+        .btn-group-landing {
+            display: flex;
+            gap: 20px;
+            justify-content: center;
+            flex-wrap: wrap;
+        }
+        .btn-landing {
+            padding: 15px 35px;
+            font-size: 1.1rem;
+        }
+        .features {
+            display: flex;
+            justify-content: center;
+            gap: 30px;
+            margin-top: 60px;
+            flex-wrap: wrap;
+        }
+        .feature-card {
+            background: rgba(0,50,50,0.4);
+            padding: 25px;
+            border-radius: 20px;
+            text-align: center;
+            width: 200px;
+            border: 1px solid rgba(0,255,200,0.2);
+        }
+        .feature-card span {
+            font-size: 2.5rem;
+        }
+    </style>
 </head>
 <body>
     <div class="container">
-        <div class="glow-effect"></div>
-        
-        <div class="header">
+        <div class="hero">
             <h1>✨ ZEXZO ✨</h1>
-            <p class="tagline">Your Digital Partner</p>
-        </div>
-
-        <!-- Kotak Jasgen -->
-        <div class="card jasgen-card">
-            <div class="card-icon">📦</div>
-            <h2>Jasgen</h2>
-            <p class="jasgen-desc"><strong>Jasgen: Jasa Gendong</strong><br>
-            1 bintang = 1k / 1000<br>
-            Cepat, aman, terpercaya! 🚀</p>
-            <div class="badge">⭐ 1 bintang = Rp 1.000</div>
-        </div>
-
-        <!-- Tombol-tombol -->
-        <div class="btn-group">
-            <a href="/Chat" class="btn btn-jasgen">
-                <span class="btn-icon">💼</span> Jasgen
-            </a>
-            <a href="/Chat" class="btn btn-chat">
-                <span class="btn-icon">💬</span> Chat Zexzo
-            </a>
-            <a href="/Sosial-Media" class="btn btn-sosmed">
-                <span class="btn-icon">📱</span> Sosial Media Zexzo
-            </a>
-        </div>
-
-        <div class="footer-note">
-            <p>⚡ Klik tombol untuk lanjut</p>
+            <p>Jasa Gendong Terpercaya • 1 Bintang = 1k</p>
+            <div class="btn-group-landing">
+                <a href="/Login" class="btn btn-chat btn-landing">🔐 Login</a>
+                <a href="/Register" class="btn btn-jasgen btn-landing">📝 Daftar</a>
+            </div>
+            <div class="features">
+                <div class="feature-card">
+                    <span>💬</span>
+                    <h3>Chat Real-time</h3>
+                    <p>Pesan langsung terkirim</p>
+                </div>
+                <div class="feature-card">
+                    <span>📦</span>
+                    <h3>Jasgen</h3>
+                    <p>Jasa Gendong 1k/⭐</p>
+                </div>
+                <div class="feature-card">
+                    <span>🤖</span>
+                    <h3>Bot Telegram</h3>
+                    <p>Owner balas cepat</p>
+                </div>
+            </div>
         </div>
     </div>
 </body>
