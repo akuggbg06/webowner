@@ -3,27 +3,26 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Zexzo | Upload Bukti</title>
+    <title>Zexzo | Kirim Bukti</title>
     <link rel="stylesheet" href="/style.css">
     <style>
-        .upload-area {
-            border: 2px dashed rgba(0,255,200,0.3);
-            border-radius: 20px;
-            padding: 40px;
-            text-align: center;
+        .info-text {
+            background: rgba(0,50,50,0.5);
+            padding: 15px;
+            border-radius: 15px;
             margin-bottom: 20px;
-            cursor: pointer;
-            transition: all 0.3s;
+            font-size: 0.85rem;
+            color: #88ffdd;
         }
-        .upload-area:hover {
-            border-color: #00ffcc;
-            background: rgba(0,255,200,0.05);
-        }
-        .preview-img {
-            max-width: 100%;
-            max-height: 200px;
-            border-radius: 10px;
-            margin-top: 20px;
+        .link-input {
+            width: 100%;
+            padding: 12px;
+            border-radius: 20px;
+            background: rgba(0,0,0,0.4);
+            border: 1px solid rgba(0,255,200,0.3);
+            color: white;
+            margin-bottom: 20px;
+            font-family: inherit;
         }
         .keterangan {
             width: 100%;
@@ -34,14 +33,7 @@
             color: white;
             margin-bottom: 20px;
             font-family: inherit;
-        }
-        .info-text {
-            background: rgba(0,50,50,0.5);
-            padding: 15px;
-            border-radius: 15px;
-            margin-bottom: 20px;
-            font-size: 0.85rem;
-            color: #88ffdd;
+            resize: vertical;
         }
         .back-chat {
             display: inline-block;
@@ -49,35 +41,33 @@
             color: #00ffcc;
             text-decoration: none;
         }
-        .btn:disabled {
-            opacity: 0.5;
-            cursor: not-allowed;
+        .example {
+            font-size: 0.7rem;
+            color: #88aacc;
+            margin-top: 5px;
         }
     </style>
 </head>
 <body>
     <div class="container">
         <div class="header">
-            <h1>📸 UPLOAD BUKTI</h1>
-            <p class="tagline">Upload bukti transfer / pembayaran</p>
+            <h1>📸 KIRIM BUKTI</h1>
+            <p class="tagline">Kirim bukti transfer / pembayaran</p>
         </div>
 
         <div class="info-text">
-            ⚠️ Upload bukti pembayaran atau transfer kamu di sini.<br>
-            Foto akan langsung dikirim ke admin via Telegram.
+            ⚠️ Upload bukti dengan cara:<br>
+            1. Upload foto ke <strong>imgur.com</strong> atau <strong>postimage.io</strong><br>
+            2. Copy link gambarnya<br>
+            3. Paste link di bawah
         </div>
 
-        <div class="upload-area" id="uploadArea">
-            📁 Klik atau drag & drop foto di sini<br>
-            <small>Maksimal 15MB (JPG, PNG, GIF)</small>
-        </div>
-        <input type="file" id="fileInput" accept="image/*" style="display:none">
-        
-        <div id="preview" style="text-align:center"></div>
+        <input type="text" id="linkFoto" class="link-input" placeholder="Masukkan link foto (https://...jpg atau ...png)">
+        <div class="example">Contoh: https://i.imgur.com/xxxxx.jpg</div>
         
         <textarea id="keterangan" class="keterangan" rows="3" placeholder="Tambahkan keterangan (opsional)..."></textarea>
         
-        <button id="uploadBtn" class="btn btn-chat" style="width:100%" disabled>📤 Upload Bukti</button>
+        <button id="kirimBtn" class="btn btn-chat" style="width:100%">📤 Kirim Bukti</button>
         
         <a href="/Chat" class="back-chat">← Kembali ke Chat</a>
         
@@ -92,88 +82,47 @@
             window.location.href = '/Login';
         }
         
-        let selectedFile = null;
-        
-        const uploadArea = document.getElementById('uploadArea');
-        const fileInput = document.getElementById('fileInput');
-        const preview = document.getElementById('preview');
+        const linkFoto = document.getElementById('linkFoto');
         const keterangan = document.getElementById('keterangan');
-        const uploadBtn = document.getElementById('uploadBtn');
+        const kirimBtn = document.getElementById('kirimBtn');
         const statusMsg = document.getElementById('statusMsg');
         
-        uploadArea.addEventListener('click', () => {
-            fileInput.click();
-        });
-        
-        uploadArea.addEventListener('dragover', (e) => {
-            e.preventDefault();
-            uploadArea.style.borderColor = '#00ffcc';
-        });
-        
-        uploadArea.addEventListener('dragleave', () => {
-            uploadArea.style.borderColor = 'rgba(0,255,200,0.3)';
-        });
-        
-        uploadArea.addEventListener('drop', (e) => {
-            e.preventDefault();
-            uploadArea.style.borderColor = 'rgba(0,255,200,0.3)';
-            const file = e.dataTransfer.files[0];
-            if (file && file.type.startsWith('image/')) {
-                handleFile(file);
-            } else {
-                alert('Hanya file gambar yang diperbolehkan!');
-            }
-        });
-        
-        fileInput.addEventListener('change', (e) => {
-            if (e.target.files[0]) {
-                handleFile(e.target.files[0]);
-            }
-        });
-        
-        function handleFile(file) {
-            if (file.size > 15 * 1024 * 1024) {
-                alert('Ukuran foto maksimal 15MB!');
+        kirimBtn.addEventListener('click', async () => {
+            const link = linkFoto.value.trim();
+            
+            if (!link) {
+                statusMsg.style.color = '#ff6666';
+                statusMsg.textContent = 'Masukkan link foto!';
                 return;
             }
             
-            selectedFile = file;
+            if (!link.startsWith('http://') && !link.startsWith('https://')) {
+                statusMsg.style.color = '#ff6666';
+                statusMsg.textContent = 'Link harus dimulai dengan http:// atau https://';
+                return;
+            }
             
-            const reader = new FileReader();
-            reader.onload = function(event) {
-                preview.innerHTML = `<img src="${event.target.result}" class="preview-img"><br><small>${file.name}</small>`;
-                uploadBtn.disabled = false;
-            };
-            reader.readAsDataURL(file);
-        }
-        
-        uploadBtn.addEventListener('click', async () => {
-            if (!selectedFile) return;
-            
-            uploadBtn.disabled = true;
-            uploadBtn.textContent = 'Mengirim...';
+            kirimBtn.disabled = true;
+            kirimBtn.textContent = 'Mengirim...';
             statusMsg.style.color = '#88ffdd';
             statusMsg.textContent = 'Mengirim bukti ke admin...';
             
-            const formData = new FormData();
-            formData.append('photo', selectedFile);
-            formData.append('keterangan', keterangan.value);
-            
             try {
-                const res = await fetch('/api/upload-bukti', {
+                const res = await fetch('/api/kirim-bukti', {
                     method: 'POST',
-                    headers: { 'Authorization': `Bearer ${token}` },
-                    body: formData
+                    headers: {
+                        'Content-Type': 'application/json',
+                        'Authorization': `Bearer ${token}`
+                    },
+                    body: JSON.stringify({
+                        link: link,
+                        keterangan: keterangan.value
+                    })
                 });
                 
-                let data;
-                try {
-                    data = await res.json();
-                } catch (e) {
-                    throw new Error('Server error, coba lagi');
-                }
+                const data = await res.json();
                 
-                if (data.success || data.error === false) {
+                if (data.success) {
                     statusMsg.style.color = '#66ff66';
                     statusMsg.textContent = '✅ Bukti berhasil dikirim! Redirect ke chat...';
                     setTimeout(() => {
@@ -181,16 +130,15 @@
                     }, 2000);
                 } else {
                     statusMsg.style.color = '#ff6666';
-                    statusMsg.textContent = data.error || data.message || 'Gagal mengirim bukti';
-                    uploadBtn.disabled = false;
-                    uploadBtn.textContent = '📤 Upload Bukti';
+                    statusMsg.textContent = data.message || 'Gagal mengirim bukti';
+                    kirimBtn.disabled = false;
+                    kirimBtn.textContent = '📤 Kirim Bukti';
                 }
             } catch (err) {
-                console.error('Upload error:', err);
                 statusMsg.style.color = '#ff6666';
                 statusMsg.textContent = 'Terjadi kesalahan: ' + err.message;
-                uploadBtn.disabled = false;
-                uploadBtn.textContent = '📤 Upload Bukti';
+                kirimBtn.disabled = false;
+                kirimBtn.textContent = '📤 Kirim Bukti';
             }
         });
     </script>
