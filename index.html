@@ -3,78 +3,178 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Zexzo | Home</title>
-    <link rel="stylesheet" href="/style.css">
+    <title>Zexzo | Jasa Gendong</title>
     <style>
-        .hero {
-            text-align: center;
-            padding: 60px 20px;
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
         }
-        .hero h1 {
-            font-size: 3.5rem;
-            margin-bottom: 20px;
-        }
-        .hero p {
-            font-size: 1.2rem;
-            margin-bottom: 40px;
-            color: #bbffee;
-        }
-        .btn-group-landing {
-            display: flex;
-            gap: 20px;
-            justify-content: center;
-            flex-wrap: wrap;
-        }
-        .btn-landing {
-            padding: 15px 35px;
-            font-size: 1.1rem;
-        }
-        .features {
+
+        body {
+            min-height: 100vh;
+            background: linear-gradient(135deg, #0a0f1e 0%, #0a2a3e 50%, #0a1a1a 100%);
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
             display: flex;
             justify-content: center;
-            gap: 30px;
-            margin-top: 60px;
-            flex-wrap: wrap;
+            align-items: center;
+            padding: 20px;
         }
-        .feature-card {
-            background: rgba(0,50,50,0.4);
-            padding: 25px;
-            border-radius: 20px;
+
+        .container {
+            max-width: 500px;
+            width: 100%;
+            background: rgba(10, 20, 30, 0.6);
+            backdrop-filter: blur(15px);
+            border-radius: 50px;
+            padding: 40px 30px;
+            box-shadow: 0 25px 45px rgba(0,0,0,0.3), 0 0 20px rgba(0,255,200,0.2);
+            border: 1px solid rgba(0,255,200,0.3);
             text-align: center;
-            width: 200px;
-            border: 1px solid rgba(0,255,200,0.2);
         }
-        .feature-card span {
+
+        /* Avatar/Logo */
+        .logo {
+            width: 120px;
+            height: 120px;
+            margin: 0 auto 25px;
+            background: linear-gradient(135deg, #00ffcc, #0066ff);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 4rem;
+            box-shadow: 0 0 30px rgba(0,255,200,0.4);
+            animation: float 3s ease-in-out infinite;
+        }
+
+        @keyframes float {
+            0%, 100% { transform: translateY(0); }
+            50% { transform: translateY(-10px); }
+        }
+
+        h1 {
             font-size: 2.5rem;
+            background: linear-gradient(135deg, #00ffcc, #00ccff, #00ff88);
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: transparent;
+            margin-bottom: 10px;
+        }
+
+        .tagline {
+            color: #88ffdd;
+            font-size: 0.9rem;
+            margin-bottom: 15px;
+        }
+
+        .price {
+            background: rgba(255,100,0,0.2);
+            display: inline-block;
+            padding: 5px 15px;
+            border-radius: 50px;
+            font-size: 0.8rem;
+            color: #ffaa66;
+            margin-bottom: 30px;
+        }
+
+        /* Kotak Jasgen */
+        .jasgen-box {
+            background: linear-gradient(135deg, rgba(0,50,50,0.5), rgba(0,20,20,0.5));
+            border-radius: 30px;
+            padding: 20px;
+            margin-bottom: 30px;
+            border: 1px solid rgba(0,255,200,0.3);
+        }
+
+        .jasgen-box h2 {
+            color: #00ffcc;
+            font-size: 1.5rem;
+            margin-bottom: 10px;
+        }
+
+        .jasgen-box p {
+            color: #bbffee;
+            font-size: 0.9rem;
+            line-height: 1.6;
+        }
+
+        .star {
+            color: #ffcc00;
+            font-size: 1.2rem;
+            margin-top: 10px;
+        }
+
+        /* Tombol */
+        .btn-group {
+            display: flex;
+            flex-direction: column;
+            gap: 15px;
+            margin-bottom: 30px;
+        }
+
+        .btn {
+            padding: 14px 20px;
+            border: none;
+            border-radius: 60px;
+            font-size: 1rem;
+            font-weight: bold;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 12px;
+            text-decoration: none;
+        }
+
+        .btn-chat {
+            background: linear-gradient(90deg, #25D366, #128C7E);
+            color: white;
+        }
+
+        .btn-sosmed {
+            background: linear-gradient(90deg, #aa44ff, #6611cc);
+            color: white;
+        }
+
+        .btn:hover {
+            transform: translateY(-3px);
+            filter: brightness(1.05);
+        }
+
+        .footer {
+            font-size: 0.7rem;
+            color: #558888;
         }
     </style>
 </head>
 <body>
     <div class="container">
-        <div class="hero">
-            <h1>✨ ZEXZO ✨</h1>
-            <p>Jasa Gendong Terpercaya • 1 Bintang = 1k</p>
-            <div class="btn-group-landing">
-                <a href="/Login" class="btn btn-chat btn-landing">🔐 Login</a>
-                <a href="/Register" class="btn btn-jasgen btn-landing">📝 Daftar</a>
-            </div>
-            <div class="features">
-                <div class="feature-card">
-                    <span>💬</span>
-                    <h3>Chat Real-time</h3>
-                    <p>Pesan langsung terkirim</p>
-                </div>
-                <div class="feature-card">
-                    <span>📦</span>
-                    <h3>Jasgen</h3>
-                    <p>Jasa Gendong 1k/⭐</p>
-                </div>
-                <div class="feature-card">
-                    <span>🤖</span>
-                    <h3>Bot Telegram</h3>
-                    <p>Owner balas cepat</p>
-                </div>
-            </div>
+        <div class="logo">🚀</div>
+        <h1>ZEXZO</h1>
+        <div class="tagline">Your Digital Partner</div>
+        <div class="price">⭐ 1 Bintang = 1.000 ⭐</div>
+
+        <div class="jasgen-box">
+            <h2>📦 Jasgen</h2>
+            <p><strong>Jasa Gendong</strong><br>
+            Cepat, Aman, Terpercaya<br>
+            Bisa order kapan aja!</p>
+            <div class="star">★★★★★</div>
+        </div>
+
+        <div class="btn-group">
+            <a href="/Chat" class="btn btn-chat">
+                💬 Chat Admin
+            </a>
+            <a href="https://t.me/zexzo_example" class="btn btn-sosmed">
+                📱 Sosial Media
+            </a>
+        </div>
+
+        <div class="footer">
+            ⚡ Login dulu ya biar bisa chat
         </div>
     </div>
 </body>
