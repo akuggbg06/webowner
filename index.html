@@ -88,13 +88,20 @@
             border: none;
         }
 
+        /* ========== IKLAN ATAS (sebelum hero) ========== */
+        .iklan-atas {
+            margin: 20px 0 10px;
+            text-align: center;
+            min-height: 90px;
+        }
+
         /* ========== HERO ========== */
         .hero {
             display: flex;
             align-items: center;
             justify-content: space-between;
             gap: 48px;
-            padding: 60px 0 80px;
+            padding: 40px 0 60px;
             flex-wrap: wrap;
         }
 
@@ -227,30 +234,14 @@
             font-size: 0.85rem;
         }
 
-        /* ========== IKLAN / SPACE PROMO ========== */
-        .iklan-section {
-            background: linear-gradient(120deg, #001e2b, #00121a);
-            border-radius: 28px;
-            padding: 30px;
-            margin: 40px 0;
+        /* ========== IKLAN TENGAH (space iklan) ========== */
+        .iklan-tengah {
+            background: rgba(0,0,0,0.2);
+            border-radius: 24px;
+            padding: 20px;
+            margin: 30px 0;
             text-align: center;
-            border: 1px solid rgba(0,255,204,0.2);
-        }
-
-        .iklan-placeholder {
-            background: rgba(0,0,0,0.3);
-            border-radius: 20px;
-            padding: 40px;
-            font-size: 1rem;
-            color: #7e95b0;
-            border: 1px dashed rgba(0,255,204,0.3);
-        }
-
-        .iklan-placeholder i {
-            font-size: 2rem;
-            margin-bottom: 12px;
-            display: block;
-            color: #00ffcc;
+            border: 1px solid rgba(0,255,204,0.15);
         }
 
         /* ========== FOOTER ========== */
@@ -320,7 +311,17 @@
         </div>
     </div>
 
-    <!-- HERO -->
+    <!-- ========== IKLAN 1: DI ATAS HERO (SEBELUM JASA GENDONG) ========== -->
+    <div class="iklan-atas">
+        <!-- COPY PASTE KODE POPUNDER ATAU BANNER DARI ADSTERRA DI SINI -->
+        <!-- Contoh: -->
+        <!-- <script type="text/javascript" src="https://..."></script> -->
+        <div style="background: rgba(0,255,204,0.05); border-radius: 16px; padding: 12px; font-size: 12px; color: #00ffcc;">
+            📢 Iklan akan muncul di sini (tempelkan kode Adsterra)
+        </div>
+    </div>
+
+    <!-- HERO SECTION -->
     <div class="hero">
         <div class="hero-content">
             <div class="hero-badge">🚀 Jasa Gendong Digital</div>
@@ -334,18 +335,18 @@
             </div>
         </div>
         <div class="hero-image">
-            <i class="fas fa-boxes"></i>
-            <p style="margin-top: 20px; color:#a0b3d9;">siap gendong kapan aja 📦</p>
+            <i class="fas fa-hand-peace"></i>
+            <p style="margin-top: 20px; color:#a0b3d9;">siap gendong kapan aja</p>
         </div>
     </div>
 
-    <!-- LAYANAN UNGGULAN (hanya Jasgen + Real-time Chat) -->
+    <!-- LAYANAN UNGGULAN -->
     <div class="section-title">
         <span>Layanan</span> Unggulan
     </div>
     <div class="card-grid">
         <div class="service-card">
-            <div class="service-icon">📦</div>
+            <div class="service-icon">🤝</div>
             <h3>Jasgen</h3>
             <p>Jasa Gendong serba bisa. Dari bawain belanjaan sampai nemenin acara.</p>
             <span class="price-tag">⭐ 1 Bintang = 1.000</span>
@@ -358,12 +359,11 @@
         </div>
     </div>
 
-    <!-- TEMPAT IKLAN (bisa kamu isi sendiri) -->
-    <div class="iklan-section">
-        <div class="iklan-placeholder">
-            <i class="fas fa-ad"></i>
-            <strong>Space Iklan / Promo</strong><br>
-            <span style="font-size: 0.8rem;">Taruh banner, teks promo, atau apapun di sini. Edit di file index.html bagian "iklan-section".</span>
+    <!-- ========== IKLAN 2: SPACE IKLAN TENGAH ========== -->
+    <div class="iklan-tengah">
+        <!-- COPY PASTE KODE NATIVE BANNER ATAU SMARTLINK DARI ADSTERRA DI SINI -->
+        <div style="background: rgba(0,255,204,0.05); border-radius: 16px; padding: 12px; font-size: 12px; color: #00ffcc;">
+            <script src="https://pl29741735.effectivecpmnetwork.com/0f/c0/7d/0fc07d0310047ac32ab418fefbc16dc4.js"></script>
         </div>
     </div>
 
@@ -378,6 +378,10 @@
         <p style="margin-top: 12px;">💙 Dibangun untuk kemudahanmu</p>
     </div>
 </div>
+
+<!-- ========== POPUNDER (biasanya ditaruh paling bawah body) ========== -->
+<!-- COPY PASTE KODE POPUNDER DARI ADSTERRA DI SINI -->
+<script src="https://pl29741735.effectivecpmnetwork.com/0f/c0/7d/0fc07d0310047ac32ab418fefbc16dc4.js"></script>
 
 </body>
 </html>
