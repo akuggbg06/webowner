@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Zexzo | Login</title>
+    <link rel="stylesheet" href="/style.css">
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1>🔐 LOGIN</h1>
+            <p class="tagline">Masuk ke akun Zexzo</p>
+        </div>
+
+        <div class="form-group">
+            <label>Username</label>
+            <input type="text" id="username" placeholder="Masukkan username">
+        </div>
+        <div class="form-group">
+            <label>Password</label>
+            <input type="password" id="password" placeholder="Masukkan password">
+        </div>
+
+        <button class="btn btn-jasgen" id="loginBtn" style="width:100%">Login</button>
+        <div id="errorMsg" class="error-msg"></div>
+
+        <div class="footer-note">
+            <p>Belum punya akun? <a href="/Register" style="color:#00ffcc">Daftar di sini</a></p>
+        </div>
+    </div>
+
+    <script>
+        document.getElementById('loginBtn').addEventListener('click', async () => {
+            const username = document.getElementById('username').value.trim();
+            const password = document.getElementById('password').value.trim();
+            const errorMsg = document.getElementById('errorMsg');
+
+            if (!username || !password) {
+                errorMsg.textContent = 'Username dan password harus diisi!';
+                return;
+            }
+
+            try {
+                const response = await fetch('/api/auth-login', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ username, password })
+                });
+
+                const data = await response.json();
+
+                if (data.success) {
+                    localStorage.setItem('token', data.token);
+                    localStorage.setItem('userId', data.userId);
+                    window.location.href = '/Chat';
+                } else {
+                    errorMsg.textContent = data.message || 'Login gagal!';
+                }
+            } catch (err) {
+                errorMsg.textContent = 'Terjadi kesalahan, coba lagi.';
+            }
+        });
+    </script>
+</body>
+</html>
