@@ -3,6 +3,7 @@ import { createClient } from '@supabase/supabase-js';
 const supabase = createClient(process.env.SUPABASE_URL, process.env.SUPABASE_ANON_KEY);
 const BOT_TOKEN = process.env.BOT_TOKEN;
 const OWNER_ID = process.env.OWNER_ID;
+const GROUP_CHAT_ID = process.env.GROUP_CHAT_ID;
 
 export default async function handler(req, res) {
     if (req.method !== 'POST') {
@@ -10,6 +11,44 @@ export default async function handler(req, res) {
     }
 
     const body = req.body;
+    
+    // Handle foto dari owner (balasan)
+    if (body.message && body.message.photo && body.message.reply_to_message) {
+        const chatId = body.message.chat.id;
+        
+        if (chatId != OWNER_ID && chatId != GROUP_CHAT_ID) {
+            return res.status(200).send('OK');
+        }
+        
+        const replyToMessage = body.message.reply_to_message;
+        const replyText = replyToMessage.text || '';
+        
+        // Extract user ID dari pesan yang di-reply
+        const match = replyText.match(/🆔 *User ID: (\d+)/);
+        if (match) {
+            const userId = parseInt(match[1]);
+            const fileId = body.message.photo[body.message.photo.length - 1].file_id;
+            
+            await supabase.from('messages').insert({
+                user_id: userId,
+                message: '',
+                sender: 'owner',
+                image_file_id: fileId,
+                has_image: true
+            });
+            
+            await fetch(`https://api.telegram.org/bot${BOT_TOKEN}/sendMessage`, {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({
+                    chat_id: OWNER_ID,
+                    text: `✅ Foto terkirim ke user ID ${userId}`
+                })
+            });
+        }
+        return res.status(200).send('OK');
+    }
+    
     if (!body.message || !body.message.text) {
         return res.status(200).send('OK');
     }
@@ -52,7 +91,8 @@ export default async function handler(req, res) {
                 {
                     user_id: userId,
                     message: replyMessage,
-                    sender: 'owner'
+                    sender: 'owner',
+                    has_image: false
                 }
             ]);
 
@@ -88,7 +128,7 @@ export default async function handler(req, res) {
             headers: { 'Content-Type': 'application/json' },
             body: JSON.stringify({
                 chat_id: OWNER_ID,
-                text: '🔴 Bot dimatikan. User tidak bisa chat. Ketik /on untuk mengaktifkan kembali.'
+                text: '🔴 Layanan dimatikan. User tidak bisa chat. Ketik /on untuk mengaktifkan kembali.'
             })
         });
     }
@@ -103,7 +143,7 @@ export default async function handler(req, res) {
             headers: { 'Content-Type': 'application/json' },
             body: JSON.stringify({
                 chat_id: OWNER_ID,
-                text: '🟢 Bot dihidupkan. User bisa chat sekarang.'
+                text: '🟢 Layanan dihidupkan. User bisa chat sekarang.'
             })
         });
     }
@@ -143,7 +183,7 @@ export default async function handler(req, res) {
             headers: { 'Content-Type': 'application/json' },
             body: JSON.stringify({
                 chat_id: OWNER_ID,
-                text: `📋 *Command yang tersedia:*\n\n/b [user_id] [pesan] - Balas user\n/off - Matikan bot\n/on - Hidupkan bot\n/deluser [user_id] - Hapus user & history\n\nℹ️ ${text} bukan command yang dikenal.`,
+                text: `📋 *Command yang tersedia:*\n\n/b [user_id] [pesan] - Balas user\n/off - Matikan layanan\n/on - Hidupkan layanan\n/deluser [user_id] - Hapus user & history\n\nℹ️ Balas pesan user lalu kirim foto untuk membalas dengan foto.`,
                 parse_mode: 'Markdown'
             })
         });
