@@ -1,0 +1,16 @@
+{
+  "name": "zexzo-web",
+  "version": "1.0.0",
+  "description": "Zexzo Chat Web with Telegram Bot",
+  "main": "index.html",
+  "scripts": {
+    "start": "vercel dev"
+  },
+  "dependencies": {
+    "@supabase/supabase-js": "^2.39.0",
+    "jsonwebtoken": "^9.0.2"
+  },
+  "keywords": ["chat", "telegram-bot", "supabase"],
+  "author": "Zexzo",
+  "license": "MIT"
+}
