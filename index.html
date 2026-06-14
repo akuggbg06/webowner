@@ -7,31 +7,18 @@
     <link href="https://fonts.googleapis.com/css2?family=Inter:opsz,wght@14..32,300;14..32,400;14..32,500;14..32,600;14..32,700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
     
-    <!-- ========== POPUNDER (dari Adsterra) ========== -->
+    <!-- ========== 1. POPUNDER ========== -->
     <script src="https://pl29741735.effectivecpmnetwork.com/0f/c0/7d/0fc07d0310047ac32ab418fefbc16dc4.js"></script>
     
     <style>
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-        }
-
+        * { margin: 0; padding: 0; box-sizing: border-box; }
         body {
             font-family: 'Inter', sans-serif;
             background: linear-gradient(135deg, #0a0f1e 0%, #0a1f2a 100%);
             color: #f0f3fa;
             line-height: 1.5;
-            scroll-behavior: smooth;
         }
-
-        .container {
-            max-width: 1280px;
-            margin: 0 auto;
-            padding: 0 24px;
-        }
-
-        /* ========== HEADER ========== */
+        .container { max-width: 1280px; margin: 0 auto; padding: 0 24px; }
         .navbar {
             display: flex;
             justify-content: space-between;
@@ -41,7 +28,6 @@
             gap: 20px;
             border-bottom: 1px solid rgba(255,255,255,0.08);
         }
-
         .logo {
             font-size: 1.8rem;
             font-weight: 800;
@@ -49,27 +35,10 @@
             -webkit-background-clip: text;
             background-clip: text;
             color: transparent;
-            letter-spacing: -0.5px;
         }
-
-        .nav-links {
-            display: flex;
-            gap: 32px;
-            align-items: center;
-            flex-wrap: wrap;
-        }
-
-        .nav-links a {
-            color: #e2e8f0;
-            text-decoration: none;
-            font-weight: 500;
-            transition: 0.2s;
-        }
-
-        .nav-links a:hover {
-            color: #00ffcc;
-        }
-
+        .nav-links { display: flex; gap: 32px; align-items: center; flex-wrap: wrap; }
+        .nav-links a { color: #e2e8f0; text-decoration: none; font-weight: 500; transition: 0.2s; }
+        .nav-links a:hover { color: #00ffcc; }
         .btn-outline {
             border: 1px solid rgba(0,255,204,0.5);
             padding: 8px 20px;
@@ -77,12 +46,6 @@
             background: transparent;
             color: #00ffcc;
         }
-
-        .btn-outline:hover {
-            background: rgba(0,255,204,0.1);
-            border-color: #00ffcc;
-        }
-
         .btn-solid {
             background: linear-gradient(90deg, #00ffcc, #0099ff);
             padding: 8px 24px;
@@ -91,22 +54,22 @@
             font-weight: 700;
             border: none;
         }
-
-        /* ========== HERO ========== */
+        .iklan-atas {
+            text-align: center;
+            margin: 20px 0;
+            padding: 10px;
+            background: rgba(0,0,0,0.2);
+            border-radius: 16px;
+        }
         .hero {
             display: flex;
             align-items: center;
             justify-content: space-between;
             gap: 48px;
-            padding: 60px 0 60px;
+            padding: 40px 0 60px;
             flex-wrap: wrap;
         }
-
-        .hero-content {
-            flex: 1;
-            min-width: 280px;
-        }
-
+        .hero-content { flex: 1; min-width: 280px; }
         .hero-badge {
             background: rgba(0,255,204,0.15);
             color: #00ffcc;
@@ -115,9 +78,7 @@
             font-size: 0.8rem;
             display: inline-block;
             margin-bottom: 20px;
-            font-weight: 600;
         }
-
         .hero-content h1 {
             font-size: 3rem;
             font-weight: 800;
@@ -128,25 +89,14 @@
             background-clip: text;
             color: transparent;
         }
-
         .hero-desc {
             font-size: 1.1rem;
             color: #cbd5e6;
             margin-bottom: 32px;
             max-width: 500px;
         }
-
-        .hero-stats {
-            display: flex;
-            gap: 32px;
-            margin-top: 32px;
-        }
-
-        .stat-item h3 {
-            font-size: 1.8rem;
-            color: #00ffcc;
-        }
-
+        .hero-stats { display: flex; gap: 32px; margin-top: 32px; }
+        .stat-item h3 { font-size: 1.8rem; color: #00ffcc; }
         .hero-image {
             flex: 1;
             background: rgba(0,255,204,0.05);
@@ -156,36 +106,10 @@
             border: 1px solid rgba(0,255,204,0.2);
             backdrop-filter: blur(8px);
         }
-
-        .hero-image i {
-            font-size: 8rem;
-            color: #00ffcc;
-            opacity: 0.8;
-        }
-
-        /* ========== CARD LAYANAN ========== */
-        .section-title {
-            text-align: center;
-            font-size: 2rem;
-            font-weight: 700;
-            margin: 40px 0 30px;
-        }
-
-        .section-title span {
-            background: linear-gradient(135deg, #00ffcc, #00aaff);
-            -webkit-background-clip: text;
-            background-clip: text;
-            color: transparent;
-        }
-
-        .card-grid {
-            display: flex;
-            justify-content: center;
-            gap: 30px;
-            margin: 20px 0 40px;
-            flex-wrap: wrap;
-        }
-
+        .hero-image i { font-size: 8rem; color: #00ffcc; opacity: 0.8; }
+        .section-title { text-align: center; font-size: 2rem; font-weight: 700; margin: 40px 0 30px; }
+        .section-title span { background: linear-gradient(135deg, #00ffcc, #00aaff); -webkit-background-clip: text; background-clip: text; color: transparent; }
+        .card-grid { display: flex; justify-content: center; gap: 30px; margin: 20px 0 40px; flex-wrap: wrap; }
         .service-card {
             background: rgba(255,255,255,0.04);
             backdrop-filter: blur(10px);
@@ -193,34 +117,15 @@
             padding: 32px 28px;
             text-align: center;
             border: 1px solid rgba(255,255,255,0.08);
-            transition: all 0.25s ease;
+            transition: 0.25s;
             flex: 1;
             min-width: 260px;
             max-width: 320px;
         }
-
-        .service-card:hover {
-            transform: translateY(-6px);
-            border-color: rgba(0,255,204,0.4);
-            box-shadow: 0 20px 35px -15px rgba(0,0,0,0.4);
-        }
-
-        .service-icon {
-            font-size: 3rem;
-            margin-bottom: 20px;
-        }
-
-        .service-card h3 {
-            font-size: 1.5rem;
-            margin-bottom: 12px;
-        }
-
-        .service-card p {
-            color: #a0b3d9;
-            font-size: 0.9rem;
-            margin-bottom: 20px;
-        }
-
+        .service-card:hover { transform: translateY(-6px); border-color: rgba(0,255,204,0.4); }
+        .service-icon { font-size: 3rem; margin-bottom: 20px; }
+        .service-card h3 { font-size: 1.5rem; margin-bottom: 12px; }
+        .service-card p { color: #a0b3d9; font-size: 0.9rem; margin-bottom: 20px; }
         .price-tag {
             background: #00ffcc20;
             display: inline-block;
@@ -230,57 +135,47 @@
             font-weight: 600;
             font-size: 0.85rem;
         }
-
-        /* ========== FOOTER ========== */
+        .iklan-tengah {
+            text-align: center;
+            margin: 30px 0;
+            padding: 20px;
+            background: rgba(0,0,0,0.2);
+            border-radius: 20px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 25px;
+        }
         .footer {
             margin-top: 60px;
-            padding: 40px 0 30px;
+            padding: 40px 0 20px;
             border-top: 1px solid rgba(255,255,255,0.05);
             text-align: center;
             color: #8e9cb0;
             font-size: 0.85rem;
         }
-
-        .social-links {
-            display: flex;
-            justify-content: center;
-            gap: 24px;
-            margin-bottom: 24px;
-        }
-
-        .social-links a {
-            color: #a0b3d9;
-            font-size: 1.4rem;
+        .social-links { display: flex; justify-content: center; gap: 24px; margin-bottom: 24px; }
+        .social-links a { color: #a0b3d9; font-size: 1.4rem; transition: 0.2s; }
+        .social-links a:hover { color: #00ffcc; }
+        .smartlink-btn {
+            display: inline-block;
+            background: linear-gradient(90deg, #00ffcc, #0099ff);
+            color: #0a0f1e;
+            padding: 12px 28px;
+            border-radius: 40px;
+            text-decoration: none;
+            font-weight: 700;
+            font-size: 0.9rem;
             transition: 0.2s;
         }
-
-        .social-links a:hover {
-            color: #00ffcc;
-        }
-
+        .smartlink-btn:hover { transform: scale(1.02); filter: brightness(1.05); }
         @media (max-width: 768px) {
-            .navbar {
-                flex-direction: column;
-                text-align: center;
-            }
-            .hero {
-                flex-direction: column;
-                text-align: center;
-            }
-            .hero-desc {
-                margin-left: auto;
-                margin-right: auto;
-            }
-            .hero-stats {
-                justify-content: center;
-            }
-            .hero-image {
-                order: -1;
-            }
-            .card-grid {
-                flex-direction: column;
-                align-items: center;
-            }
+            .navbar { flex-direction: column; text-align: center; }
+            .hero { flex-direction: column; text-align: center; }
+            .hero-desc { margin-left: auto; margin-right: auto; }
+            .hero-stats { justify-content: center; }
+            .hero-image { order: -1; }
+            .card-grid { flex-direction: column; align-items: center; }
         }
     </style>
 </head>
@@ -298,6 +193,12 @@
         </div>
     </div>
 
+    <!-- ========== 2. NATIVE BANNER (DI ATAS HERO) ========== -->
+    <div class="iklan-atas">
+        <script async="async" data-cfasync="false" src="https://pl29741736.effectivecpmnetwork.com/d11ef7b0dd55b7b9a566bf9186b60922/invoke.js"></script>
+        <div id="container-d11ef7b0dd55b7b9a566bf9186b60922"></div>
+    </div>
+
     <!-- HERO SECTION -->
     <div class="hero">
         <div class="hero-content">
@@ -313,14 +214,12 @@
         </div>
         <div class="hero-image">
             <i class="fas fa-hand-peace"></i>
-            <p style="margin-top: 20px; color:#a0b3d9;">siap gendong kapan aja</p>
+            <p style="margin-top: 20px;">siap gendong kapan aja</p>
         </div>
     </div>
 
     <!-- LAYANAN UNGGULAN -->
-    <div class="section-title">
-        <span>Layanan</span> Unggulan
-    </div>
+    <div class="section-title"><span>Layanan</span> Unggulan</div>
     <div class="card-grid">
         <div class="service-card">
             <div class="service-icon">🤝</div>
@@ -336,6 +235,30 @@
         </div>
     </div>
 
+    <!-- ========== 3. BANNER 160x300 + 4. SMARTLINK ========== -->
+    <div class="iklan-tengah">
+        <!-- Banner 160x300 -->
+        <div>
+            <script>
+                atOptions = {
+                    'key' : '42db22e136fbb8675c2081861c8dace9',
+                    'format' : 'iframe',
+                    'height' : 300,
+                    'width' : 160,
+                    'params' : {}
+                };
+            </script>
+            <script src="https://www.highperformanceformat.com/42db22e136fbb8675c2081861c8dace9/invoke.js"></script>
+        </div>
+        
+        <!-- Smartlink -->
+        <div>
+            <a href="https://www.effectivecpmnetwork.com/eshasxns?key=836880f4bf1d0d41c836887ac72d6bf2" target="_blank" class="smartlink-btn">
+                🔗 Promo Spesial - Klik di sini
+            </a>
+        </div>
+    </div>
+
     <!-- FOOTER -->
     <div class="footer">
         <div class="social-links">
@@ -344,12 +267,12 @@
             <a href="#"><i class="fab fa-instagram"></i></a>
         </div>
         <p>© 2025 Zexzo — Jasa Gendong 1 bintang 1k | Support 24/7</p>
-        <p style="margin-top: 12px;">💙 Dibangun untuk kemudahanmu</p>
+        <p>💙 Dibangun untuk kemudahanmu</p>
     </div>
 </div>
 
-<!-- ========== SOCIAL BAR (DI BAWAH SENDIRI, PALING BAWAH HALAMAN) ========== -->
-<div style="text-align: center; margin-top: 0; padding: 0;">
+<!-- ========== 5. SOCIAL BAR (PALING BAWAH) ========== -->
+<div style="text-align: center; margin: 0; padding: 0;">
     <script src="https://pl29741738.effectivecpmnetwork.com/80/91/ec/8091ecd1354640774391fd0ca2547edc.js"></script>
 </div>
 
