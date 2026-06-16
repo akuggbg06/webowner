@@ -53,7 +53,7 @@
                 if (data.success) {
                     localStorage.setItem('token', data.token);
                     localStorage.setItem('userId', data.userId);
-                    window.location.href = '/Chat';
+                    window.location.href = '/chat';
                 } else {
                     errorMsg.textContent = data.message || 'Login gagal!';
                 }
