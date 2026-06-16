@@ -195,7 +195,7 @@
         
         <button id="kirimBtn" class="btn-primary">✈️ Kirim Bukti ke Admin</button>
         
-        <a href="/Chat" class="back-link">← Kembali ke Chat</a>
+        <a href="/chat" class="back-link">← Kembali ke Chat</a>
         
         <div id="statusMsg" class="status-msg"></div>
     </div>
@@ -256,7 +256,7 @@
                     statusMsg.style.color = '#6ee7b7';
                     statusMsg.textContent = '✅ Bukti berhasil dikirim! Redirect ke chat...';
                     setTimeout(() => {
-                        window.location.href = '/Chat';
+                        window.location.href = '/chat';
                     }, 2000);
                 } else {
                     statusMsg.style.color = '#f87171';
