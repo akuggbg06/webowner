@@ -1,9 +1,9 @@
 {
   "rewrites": [
-    { "source": "/Login", "destination": "/Login/index.html" },
-    { "source": "/Register", "destination": "/Register/index.html" },
-    { "source": "/Chat", "destination": "/Chat/index.html" },
-    { "source": "/Bukti", "destination": "/Bukti/index.html" },
+    { "source": "/login", "destination": "/login/index.html" },
+    { "source": "/register", "destination": "/register/index.html" },
+    { "source": "/chat", "destination": "/chat/index.html" },
+    { "source": "/bukti", "destination": "/bukti/index.html" },
     { "source": "/api/(.*)", "destination": "/api/$1" }
   ]
 }
