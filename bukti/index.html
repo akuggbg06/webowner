@@ -4,200 +4,123 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Zexzo | Kirim Bukti</title>
+    
+    <!-- ========== FAVICON ========== -->
+    <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90' font-weight='900' font-family='Arial' fill='%2300ffcc'>Z</text></svg>">
+    
+    <link rel="stylesheet" href="/style.css">
     <style>
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-        }
-
-        body {
-            background: linear-gradient(135deg, #0f0c29, #302b63, #24243e);
-            font-family: 'Inter', 'Segoe UI', system-ui, sans-serif;
-            min-height: 100vh;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            padding: 20px;
-        }
-
-        .card {
-            max-width: 550px;
-            width: 100%;
-            background: rgba(255,255,255,0.05);
-            backdrop-filter: blur(14px);
-            border-radius: 32px;
-            padding: 32px;
-            border: 1px solid rgba(255,255,255,0.1);
-            box-shadow: 0 25px 45px rgba(0,0,0,0.2);
-        }
-
-        h1 {
-            font-size: 1.8rem;
-            background: linear-gradient(135deg, #fff, #a5f3fc);
-            -webkit-background-clip: text;
-            background-clip: text;
-            color: transparent;
-            margin-bottom: 8px;
-        }
-
-        .tagline {
-            color: rgba(255,255,255,0.6);
-            font-size: 0.85rem;
-            margin-bottom: 28px;
-            border-left: 3px solid #10b981;
-            padding-left: 12px;
-        }
-
         .info-box {
-            background: rgba(16, 185, 129, 0.1);
-            padding: 18px;
-            border-radius: 24px;
-            margin-bottom: 28px;
-            border: 1px solid rgba(16, 185, 129, 0.2);
+            background: rgba(0,50,50,0.5);
+            padding: 20px;
+            border-radius: 20px;
+            margin-bottom: 25px;
+            border-left: 4px solid #00ffcc;
         }
-
+        .info-box h3 {
+            color: #00ffcc;
+            margin-bottom: 10px;
+        }
         .info-box p {
-            color: rgba(255,255,255,0.8);
-            font-size: 0.85rem;
+            color: #bbffee;
+            font-size: 0.9rem;
             line-height: 1.5;
         }
-
         .step {
             background: rgba(0,0,0,0.3);
             padding: 12px;
-            border-radius: 18px;
-            margin: 12px 0;
-            display: flex;
-            align-items: center;
-            gap: 12px;
+            border-radius: 15px;
+            margin: 15px 0;
         }
-
         .step-number {
-            background: #10b981;
-            width: 28px;
-            height: 28px;
+            display: inline-block;
+            background: #00ffcc;
+            color: #0a2a3e;
+            width: 25px;
+            height: 25px;
             border-radius: 50%;
-            display: inline-flex;
-            align-items: center;
-            justify-content: center;
-            font-weight: bold;
-            font-size: 0.8rem;
-        }
-
-        .link-input, .keterangan {
-            width: 100%;
-            padding: 14px 16px;
-            border-radius: 24px;
-            background: rgba(0,0,0,0.4);
-            border: 1px solid rgba(255,255,255,0.1);
-            color: white;
-            font-size: 0.9rem;
-            margin-bottom: 16px;
-            transition: all 0.2s;
-        }
-
-        .link-input:focus, .keterangan:focus {
-            outline: none;
-            border-color: #10b981;
-            background: rgba(0,0,0,0.6);
-        }
-
-        .example {
-            font-size: 0.7rem;
-            color: rgba(255,255,255,0.4);
-            margin-top: -12px;
-            margin-bottom: 20px;
-        }
-
-        .btn-catbox {
-            background: linear-gradient(135deg, #f59e0b, #d97706);
-            width: 100%;
-            padding: 14px;
-            border-radius: 40px;
             text-align: center;
-            display: block;
-            text-decoration: none;
-            color: white;
-            font-weight: 600;
-            margin-bottom: 24px;
-            transition: all 0.2s;
+            font-weight: bold;
+            margin-right: 10px;
         }
-
-        .btn-catbox:hover {
-            transform: translateY(-2px);
-            filter: brightness(1.05);
-        }
-
-        .btn-primary {
-            background: linear-gradient(135deg, #10b981, #059669);
+        .link-input {
             width: 100%;
-            padding: 14px;
-            border-radius: 40px;
-            border: none;
+            padding: 12px;
+            border-radius: 20px;
+            background: rgba(0,0,0,0.4);
+            border: 1px solid rgba(0,255,200,0.3);
             color: white;
-            font-weight: 600;
-            font-size: 1rem;
-            cursor: pointer;
-            transition: all 0.2s;
+            margin-bottom: 20px;
+            font-family: inherit;
         }
-
-        .btn-primary:hover {
-            transform: translateY(-2px);
-            filter: brightness(1.05);
+        .keterangan {
+            width: 100%;
+            padding: 12px;
+            border-radius: 20px;
+            background: rgba(0,0,0,0.4);
+            border: 1px solid rgba(0,255,200,0.3);
+            color: white;
+            margin-bottom: 20px;
+            font-family: inherit;
+            resize: vertical;
         }
-
-        .btn-primary:disabled {
-            opacity: 0.5;
-            transform: none;
+        .btn-catbox {
+            background: linear-gradient(90deg, #ff8800, #cc6600);
+            margin-bottom: 20px;
+            display: inline-block;
+            text-decoration: none;
         }
-
-        .back-link {
+        .back-chat {
             display: inline-block;
             margin-top: 20px;
-            color: rgba(255,255,255,0.5);
+            color: #00ffcc;
             text-decoration: none;
-            font-size: 0.8rem;
         }
-
-        .back-link:hover {
-            color: #10b981;
-        }
-
-        .status-msg {
-            margin-top: 16px;
-            font-size: 0.8rem;
-            text-align: center;
+        .example {
+            font-size: 0.7rem;
+            color: #88aacc;
+            margin-top: 5px;
+            margin-bottom: 15px;
         }
     </style>
 </head>
 <body>
-    <div class="card">
-        <h1>📸 Kirim Bukti</h1>
-        <div class="tagline">Upload & kirim bukti pembayaran</div>
-
-        <div class="info-box">
-            <p>📋 <strong>Cara upload bukti:</strong></p>
-            <div class="step"><span class="step-number">1</span> Buka <strong>files.catbox.moe</strong></div>
-            <div class="step"><span class="step-number">2</span> Klik "Select files" → pilih foto</div>
-            <div class="step"><span class="step-number">3</span> Copy link hasil upload</div>
-            <div class="step"><span class="step-number">4</span> Paste link di bawah → Kirim</div>
+    <div class="container">
+        <div class="header">
+            <h1>📸 KIRIM BUKTI</h1>
+            <p class="tagline">Upload & kirim bukti pembayaran</p>
         </div>
 
-        <a href="https://files.catbox.moe" target="_blank" class="btn-catbox">
+        <div class="info-box">
+            <h3>📋 Cara Upload Bukti:</h3>
+            <div class="step">
+                <span class="step-number">1</span> Buka <strong>files.catbox.moe</strong>
+            </div>
+            <div class="step">
+                <span class="step-number">2</span> Klik <strong>"Select or drop files"</strong> → pilih foto bukti
+            </div>
+            <div class="step">
+                <span class="step-number">3</span> Tunggu upload selesai → copy link yang muncul
+            </div>
+            <div class="step">
+                <span class="step-number">4</span> Paste link-nya di bawah + keterangan → kirim
+            </div>
+        </div>
+
+        <a href="https://files.catbox.moe" target="_blank" class="btn btn-catbox" style="width:100%; text-align:center; display:block;">
             🔗 Buka Catbox.moe (Upload Foto)
         </a>
 
-        <input type="text" id="linkFoto" class="link-input" placeholder="Paste link dari Catbox">
+        <input type="text" id="linkFoto" class="link-input" placeholder="Paste link dari Catbox (https://files.catbox.moe/xxxxx)">
         <div class="example">Contoh: https://files.catbox.moe/abc123.jpg</div>
         
-        <textarea id="keterangan" class="keterangan" rows="3" placeholder="Keterangan (opsional) contoh: Bukti transfer Zexzo"></textarea>
+        <textarea id="keterangan" class="keterangan" rows="3" placeholder="Tambahkan keterangan (opsional) contoh: Bukti transfer Zexzo"></textarea>
         
-        <button id="kirimBtn" class="btn-primary">✈️ Kirim Bukti ke Admin</button>
+        <button id="kirimBtn" class="btn btn-chat" style="width:100%">📤 Kirim Bukti ke Admin</button>
         
-        <a href="/chat" class="back-link">← Kembali ke Chat</a>
+        <a href="/chat" class="back-chat">← Kembali ke Chat</a>
         
-        <div id="statusMsg" class="status-msg"></div>
+        <div id="statusMsg" class="footer-note" style="margin-top:20px"></div>
     </div>
 
     <script>
@@ -205,7 +128,7 @@
         const userId = localStorage.getItem('userId');
         
         if (!token || !userId) {
-            window.location.href = '/Login';
+            window.location.href = '/login';
         }
         
         const linkFoto = document.getElementById('linkFoto');
@@ -217,8 +140,8 @@
             let link = linkFoto.value.trim();
             
             if (!link) {
-                statusMsg.style.color = '#f87171';
-                statusMsg.textContent = '❌ Masukkan link foto dari Catbox!';
+                statusMsg.style.color = '#ff6666';
+                statusMsg.textContent = 'Masukkan link foto dari Catbox!';
                 return;
             }
             
@@ -226,15 +149,15 @@
                 link = 'https://files.catbox.moe/' + link.replace(/^\/+/, '');
             }
             
-            if (!link.includes('files.catbox.moe')) {
-                statusMsg.style.color = '#f87171';
-                statusMsg.textContent = '❌ Link harus dari files.catbox.moe!';
+            if (!link.startsWith('https://files.catbox.moe/')) {
+                statusMsg.style.color = '#ff6666';
+                statusMsg.textContent = 'Link harus dari files.catbox.moe ya!';
                 return;
             }
             
             kirimBtn.disabled = true;
             kirimBtn.textContent = 'Mengirim...';
-            statusMsg.style.color = '#6ee7b7';
+            statusMsg.style.color = '#88ffdd';
             statusMsg.textContent = 'Mengirim bukti ke admin...';
             
             try {
@@ -253,22 +176,22 @@
                 const data = await res.json();
                 
                 if (data.success) {
-                    statusMsg.style.color = '#6ee7b7';
+                    statusMsg.style.color = '#66ff66';
                     statusMsg.textContent = '✅ Bukti berhasil dikirim! Redirect ke chat...';
                     setTimeout(() => {
                         window.location.href = '/chat';
                     }, 2000);
                 } else {
-                    statusMsg.style.color = '#f87171';
+                    statusMsg.style.color = '#ff6666';
                     statusMsg.textContent = data.message || 'Gagal mengirim bukti';
                     kirimBtn.disabled = false;
-                    kirimBtn.textContent = '✈️ Kirim Bukti ke Admin';
+                    kirimBtn.textContent = '📤 Kirim Bukti';
                 }
             } catch (err) {
-                statusMsg.style.color = '#f87171';
-                statusMsg.textContent = '❌ Terjadi kesalahan, coba lagi';
+                statusMsg.style.color = '#ff6666';
+                statusMsg.textContent = 'Terjadi kesalahan, coba lagi';
                 kirimBtn.disabled = false;
-                kirimBtn.textContent = '✈️ Kirim Bukti ke Admin';
+                kirimBtn.textContent = '📤 Kirim Bukti';
             }
         });
     </script>
