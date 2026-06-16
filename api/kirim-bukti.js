@@ -48,7 +48,7 @@ export default async function handler(req, res) {
             headers: { 'Content-Type': 'application/json' },
             body: JSON.stringify({
                 chat_id: OWNER_ID,
-                text: `📸 *Bukti dari User ID ${userId}*\n🔗 ${link}\n📝 ${keterangan || '-'}`,
+                text: `📸 *BUKTI PEMBAYARAN*\n\n👤 User ID: ${userId}\n🔗 Link: ${link}\n📝 Keterangan: ${keterangan || '-'}`,
                 parse_mode: 'Markdown'
             })
         });
