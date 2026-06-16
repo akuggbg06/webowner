@@ -194,14 +194,14 @@
         const userId = localStorage.getItem('userId');
 
         if (!token || !userId) {
-            window.location.href = '/Login';
+            window.location.href = '/login';
         }
 
         // ========== LOG OUT ==========
         document.getElementById('logoutBtn').addEventListener('click', () => {
             localStorage.removeItem('token');
             localStorage.removeItem('userId');
-            window.location.href = '/Login';
+            window.location.href = '/login';
         });
 
         let ownerStatus = 'on';
@@ -357,7 +357,7 @@
 
         // Tombol bukti
         document.getElementById('buktiBtn').addEventListener('click', () => {
-            window.location.href = '/Bukti';
+            window.location.href = '/bukti';
         });
 
         document.getElementById('sendBtn').addEventListener('click', sendMessage);
