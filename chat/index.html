@@ -4,6 +4,10 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
     <title>Zexzo | Chat</title>
+    
+    <!-- ========== FAVICON ========== -->
+    <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90' font-weight='900' font-family='Arial' fill='%2300ffcc'>Z</text></svg>">
+    
     <style>
         * {
             margin: 0;
@@ -40,7 +44,7 @@
         .chat-header .info {
             flex: 1;
         }
-        .chat-header h2 {
+        .chat-header .info h2 {
             font-size: 1.2rem;
         }
         #logoutBtn {
@@ -263,7 +267,7 @@
             const div = document.createElement('div');
             div.className = `message ${type}`;
             
-            // === JAM WIB (UTC+7) ===
+            // JAM WIB
             const time = msg.created_at ? new Date(msg.created_at).toLocaleTimeString('id-ID', { hour: '2-digit', minute: '2-digit', timeZone: 'Asia/Jakarta' }) : new Date().toLocaleTimeString('id-ID', { hour: '2-digit', minute: '2-digit', timeZone: 'Asia/Jakarta' });
             
             let content = '';
@@ -352,10 +356,9 @@
 
         function startPolling() {
             if (pollingInterval) clearInterval(pollingInterval);
-            pollingInterval = setInterval(pollNewMessages, 1000); // 1 detik
+            pollingInterval = setInterval(pollNewMessages, 1000);
         }
 
-        // Tombol bukti
         document.getElementById('buktiBtn').addEventListener('click', () => {
             window.location.href = '/bukti';
         });
