@@ -26,7 +26,7 @@
         <div id="message" class="error-msg"></div>
 
         <div class="footer-note">
-            <p>Sudah punya akun? <a href="/Login" style="color:#00ffcc">Login di sini</a></p>
+            <p>Sudah punya akun? <a href="/login" style="color:#00ffcc">Login di sini</a></p>
         </div>
     </div>
 
@@ -59,7 +59,7 @@
                     message.style.color = '#66ff66';
                     message.textContent = 'Pendaftaran berhasil! Redirect ke login...';
                     setTimeout(() => {
-                        window.location.href = '/Login';
+                        window.location.href = '/login';
                     }, 2000);
                 } else {
                     message.textContent = data.message || 'Pendaftaran gagal!';
